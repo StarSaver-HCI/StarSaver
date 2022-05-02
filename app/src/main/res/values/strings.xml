@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">StarSaver</string>
+    <string name="title_home">홈</string>
+    <string name="title_settings">설정</string>
+    <string name="title_notifications">알람</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="loginGuest">게스트로 로그인</string>
+    <string name="loginGoogle">google 로그인</string>
+    <string name="action_sign_in">sign in</string>
+    <string name="log_out">Log out</string>
+    <string name="add">add</string>
+    <string name="addFolder">addFolder</string>
+    <string name="addLink">addLink</string>
+    <string name="checkUrl">url 형식을 확인해주세요</string>
+    <string name="search">검색</string>
+    <string name="emptyText">당신의 별을 추가해 보세요</string>
+    <string name="folderName">폴더명</string>
+    <string name="settingReminder">리마인더 설정</string>
+    <string name="titleText">제목</string>
+    <string name="memo">메모</string>
+    <string name="linkText">링크</string>
+    <string name="editText">편집</string>
+    <string name="settingBookMark">북마크 설정</string>
+    <string name="removeString">삭제하기</string>
+    <string name="shareString">공유하기</string>
+    <string name="notificationString">알람</string>
+    <string name="remindFoldersStrung">알림 받을 폴더</string>
+    <string name="cancelString">cancel</string>
+    <string name="saveString">save</string>
+</resources>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "683011360402",
+    "project_id": "starsaver-301ce",
+    "storage_bucket": "starsaver-301ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683011360402:android:35f984b52c48331e2e084b",
+        "android_client_info": {
+          "package_name": "com.hci.starsaver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683011360402-dtbaukqrrridf0d9gjj9jt8ftrmqefh4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-myhxJye-0MXNO4DrIaqDmTommF1esHQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683011360402-dtbaukqrrridf0d9gjj9jt8ftrmqefh4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

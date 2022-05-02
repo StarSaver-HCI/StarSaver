@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="8dp"
+    android:background="@drawable/link_item_shape"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:padding="8dp"
+        android:id="@+id/imageView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="8dp"
+        android:background="@drawable/image_shape"
+        android:src="@mipmap/ic_launcher_round"
+        tools:ignore="ImageContrastCheck" />
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_gravity="left"
+            android:id="@+id/linkTextView"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/starImageView"
+        android:layout_gravity="center"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:visibility="invisible"
+        android:background="@drawable/ic_baseline_star_24"/>
+
+    <ImageButton
+        android:layout_marginEnd="16dp"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/editButton"
+        android:layout_width="50dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_baseline_ios_share_24"
+        android:layout_height="50dp"/>
+
+</LinearLayout>

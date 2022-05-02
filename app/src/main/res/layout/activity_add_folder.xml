@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomSheetDashBoardLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/transparentView"
+        android:layout_width="0dp"
+        android:layout_height="400dp"
+        app:layout_constraintBottom_toTopOf="@id/lineView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/parentView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bottom_popup_shape"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/transparentView" />
+
+    <View
+        android:id="@+id/lineView"
+        android:layout_width="150dp"
+        android:layout_height="5dp"
+        android:layout_gravity="center"
+        android:layout_marginVertical="12dp"
+        android:background="@color/gray_cc"
+        app:layout_constraintBottom_toTopOf="@id/folderNameLayout"
+        app:layout_constraintEnd_toEndOf="@id/parentView"
+        app:layout_constraintStart_toStartOf="@id/parentView"
+        app:layout_constraintTop_toTopOf="@id/parentView" />
+
+    <LinearLayout
+        android:id="@+id/folderNameLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="24dp"
+        app:layout_constraintBottom_toTopOf="@id/reminderLayout"
+        app:layout_constraintEnd_toEndOf="@id/parentView"
+        app:layout_constraintStart_toStartOf="@id/parentView"
+        app:layout_constraintTop_toBottomOf="@id/lineView">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_baseline_folder_open_24" />
+
+        <EditText
+            android:id="@+id/folderNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:hint="@string/folderName"
+            android:imeOptions="actionDone"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/reminderLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="24dp"
+        app:layout_constraintBottom_toTopOf="@id/buttonLayout"
+        app:layout_constraintEnd_toEndOf="@id/parentView"
+        app:layout_constraintStart_toStartOf="@id/parentView">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_baseline_notifications_none_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="14dp"
+            android:layout_weight="1"
+            android:hint="@string/settingReminder"
+            android:textSize="18sp" />
+
+        <Switch
+            android:id="@+id/reminderSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:padding="24dp"
+        app:layout_constraintBottom_toBottomOf="@id/parentView"
+        app:layout_constraintEnd_toEndOf="@id/parentView">
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/button_cancel"
+            android:text="@string/cancelString" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_ok_selector"
+            android:textColor="@color/white"
+            android:text="@string/saveString" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
