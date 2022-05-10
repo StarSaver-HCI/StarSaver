@@ -1,24 +1,33 @@
 package com.hci.starsaver.ui.addlink
 
 import android.R
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.MotionEvent
 import android.view.View
+import android.view.Window
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.hci.starsaver.data.bookMark.BookMark
 import com.hci.starsaver.databinding.ActivityAddLinkBinding
+import com.hci.starsaver.databinding.DialogAddLinkBinding
 import com.hci.starsaver.ui.home.HomeViewModel
 import com.hci.starsaver.util.ImageDownloadManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import net.mm2d.touchicon.TouchIconExtractor
+
 
 class AddLinkActivity:AppCompatActivity() {
 
@@ -33,6 +42,37 @@ class AddLinkActivity:AppCompatActivity() {
         binding = ActivityAddLinkBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+
+        // todo
+        val view = binding.parentView
+        var distance = 0f
+        var oldY = 0f
+        view.run {
+            setOnTouchListener(object : View.OnTouchListener {
+                override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                    when (event?.action) {
+                        MotionEvent.ACTION_DOWN -> {
+                            distance = event.getY()
+                            oldY = binding.bottomSheetDashBoardLayout.getY()
+                        }
+                        MotionEvent.ACTION_MOVE -> {
+                            if(distance-event.getY() < 0){
+                                binding.bottomSheetDashBoardLayout.setY(oldY - (distance - event.getY()))
+                            }
+                        }
+                        MotionEvent.ACTION_UP -> {
+                            distance -= event.getY()
+
+                            if(Math.abs(distance) < 500){binding.bottomSheetDashBoardLayout.animate().y(oldY)
+                            return false}
+                            if(distance < 0){ finish() }
+                        }
+                    }
+                    return true
+                }
+            })
+        }
+        // todo
 
 
         initButtons()
@@ -57,8 +97,11 @@ class AddLinkActivity:AppCompatActivity() {
     }
 
     private fun showAddLinkPopup() {
-        // todo 현재 함수만 구현하면 됩니다
-        // 구현 후에 주석을 지워주세요
+        var addLinkDialog = Dialog(this)
+        var dialogView = DialogAddLinkBinding.inflate(layoutInflater).root
+        addLinkDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        addLinkDialog.setContentView(dialogView)
+        addLinkDialog.show()
     }
 
     private fun initButtons() {
@@ -82,11 +125,11 @@ class AddLinkActivity:AppCompatActivity() {
             // 앱 외부에서 링크 추가할 때
             if(isExternal) Toast.makeText(this,"링크를 저장했습니다.",Toast.LENGTH_SHORT).show()
             else{
-                // todo 앱 내부에서 링크를 추가할 때 동작되는 부분입니다
-                // 구현 후에 주석을 지워주세요
                 showAddLinkPopup()
             }
-            addBitmap(bm)
+            //추가 후 팝업의 시간을 벌기 위해서 핸들러 사용
+            val handler = Handler()
+            handler.postDelayed(Runnable { addBitmap(bm) }, 1000)
         }
         binding.cancelButton.setOnClickListener {
             finish()

@@ -98,6 +98,7 @@
             android:id="@+id/sortTypeSwitchButton"
             android:layout_width="50dp"
             android:layout_height="36dp"
+            android:track="@drawable/switch_track_selector"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         <TextView

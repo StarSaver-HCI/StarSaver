@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.hci.starsaver">
+    package="com.hci.starsaver" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,7 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StarSaver"
         android:usesCleartextTraffic="true"
-        tools:targetApi="m">
+        tools:targetApi="m" >
+        <activity
+            android:name=".ui.login.LoadingActivity"
+            android:exported="false" />
         <activity android:name=".ui.login.LoginActivity" />
         <activity
             android:name=".ui.addfolder.AddFolderActivity"
@@ -25,20 +28,21 @@
         <activity
             android:name=".ui.addlink.AddLinkActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".BottomNavigationActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

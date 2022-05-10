@@ -165,6 +165,7 @@
             android:id="@+id/starSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:track="@drawable/switch_track_selector"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
     </LinearLayout>
 
@@ -197,6 +198,7 @@
             android:id="@+id/reminderSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:track="@drawable/switch_track_selector"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
     </LinearLayout>
 
@@ -210,21 +212,19 @@
         app:layout_constraintBottom_toBottomOf="@id/parentView"
         app:layout_constraintEnd_toEndOf="@id/parentView">
 
-        <Button
+        <android.widget.Button
             android:id="@+id/cancelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
-            android:background="@drawable/button_cancel"
-            android:text="@string/cancelString" />
+            android:background="@drawable/button_add_cancel" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_ok_selector"
-            android:textColor="@color/white"
-            android:text="@string/saveString" />
+            android:background="@drawable/button_save"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,26 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="@drawable/background_login"
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/loginGuestButton"
-        android:layout_width="0dp"
+    <ImageView
+        android:id="@+id/loginText1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/loginGoogleButton"
-        android:text="@string/loginGuest" />
+        android:layout_marginTop="121dp"
+        android:layout_marginLeft="36dp"
+        app:srcCompat="@drawable/background_login_text_1"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" />
 
-    <Button
-        android:id="@+id/loginGoogleButton"
-        android:layout_width="0dp"
+    <ImageView
+        android:id="@+id/loginText2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/loginGoogle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="36dp"
+        app:srcCompat="@drawable/background_login_text_2" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|center"
+        android:orientation="vertical">
+
+        <android.widget.Button
+            android:id="@+id/loginGuestButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:background="@drawable/button_login" />
+
+        <android.widget.Button
+            android:id="@+id/loginGoogleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:background="@drawable/botton_google_login" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -69,6 +69,7 @@
             android:id="@+id/reminderSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:track="@drawable/switch_track_selector"
             tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
     </LinearLayout>
 
@@ -201,14 +202,70 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <TimePicker
-                android:id="@+id/timePicker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:timePickerMode="spinner"
-                android:visibility="gone"
-                tools:visibility="visible" />
+<!--            <TimePicker-->
+<!--                android:id="@+id/timePicker"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:timePickerMode="spinner"-->
+<!--                android:visibility="gone"-->
+<!--                tools:visibility="visible" />-->
 
+
+            <LinearLayout
+                android:id="@+id/timePickerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="18dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <NumberPicker
+                    android:id="@+id/amOrPmNumberPicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:text="주"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <NumberPicker
+                    android:id="@+id/hourNumberPicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:text=" :"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <NumberPicker
+                    android:id="@+id/minuteNumberPicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:text="분"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"

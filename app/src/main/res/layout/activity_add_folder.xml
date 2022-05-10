@@ -51,9 +51,9 @@
         app:layout_constraintTop_toBottomOf="@id/lineView">
 
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_baseline_folder_open_24" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_folder" />
 
         <EditText
             android:id="@+id/folderNameEditText"
@@ -77,9 +77,9 @@
         app:layout_constraintStart_toStartOf="@id/parentView">
 
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_baseline_notifications_none_24" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_bell" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -93,6 +93,8 @@
             android:id="@+id/reminderSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:thumbTint="#FFFFFF"
+            android:track="@drawable/switch_track_selector"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
     </LinearLayout>
 
@@ -106,21 +108,19 @@
         app:layout_constraintBottom_toBottomOf="@id/parentView"
         app:layout_constraintEnd_toEndOf="@id/parentView">
 
-        <Button
+        <android.widget.Button
             android:id="@+id/cancelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
-            android:background="@drawable/button_cancel"
-            android:text="@string/cancelString" />
+            android:background="@drawable/button_add_cancel" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_ok_selector"
-            android:textColor="@color/white"
-            android:text="@string/saveString" />
+            android:background="@drawable/button_save"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -83,9 +83,9 @@
         android:layout_marginBottom="12dp">
 
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_baseline_insert_comment_24" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_memo" />
 
         <EditText
             android:id="@+id/descriptionEditText"
@@ -122,9 +122,9 @@
         android:paddingVertical="24dp">
 
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_baseline_notifications_none_24" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_bell" />
 
         <TextView
             android:layout_width="0dp"
@@ -139,6 +139,7 @@
             android:id="@+id/reminderSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:track="@drawable/switch_track_selector"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
     </LinearLayout>
 

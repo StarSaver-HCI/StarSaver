@@ -71,7 +71,7 @@ class NotificationsFragment : Fragment() {
         binding.remindFolderRecyclerView.layoutManager =
             LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
 
-        initTimePicker()
+        initTimePicker2()
         initNumberPicker()
 
         binding.countTextView.setOnClickListener {
@@ -84,7 +84,7 @@ class NotificationsFragment : Fragment() {
                 it.setBackgroundResource(R.drawable.gray_corner_background)
                 binding.timeTextView.background = null
                 binding.numberPickerLayout.visibility = View.VISIBLE
-                binding.timePicker.visibility = View.GONE
+                binding.timePickerLayout.visibility = View.GONE
                 binding.weekNumberPicker.value = BookMarkApplication.prefs.week!!
                 binding.bunNumberPicker.value = BookMarkApplication.prefs.notificationBun!!
                 binding.gaeNumberPicker.value = BookMarkApplication.prefs.notificationGae!!
@@ -94,13 +94,17 @@ class NotificationsFragment : Fragment() {
             if (timePicking) {
                 timePicking = false
                 it.background = null
-                binding.timePicker.visibility = View.GONE
+                binding.timePickerLayout.visibility = View.GONE
             } else {
                 timePicking = true
                 it.setBackgroundResource(R.drawable.gray_corner_background)
                 binding.countTextView.background = null
                 binding.numberPickerLayout.visibility = View.GONE
-                binding.timePicker.visibility = View.VISIBLE
+                binding.timePickerLayout.visibility = View.VISIBLE
+                binding.hourNumberPicker.value = BookMarkApplication.prefs.hour!!
+                binding.minuteNumberPicker.value = BookMarkApplication.prefs.minute!!
+                if(BookMarkApplication.prefs.amOrPm!! == "오전") {binding.amOrPmNumberPicker.value = 0}
+                else {binding.amOrPmNumberPicker.value = 1}
             }
         }
 
@@ -146,9 +150,9 @@ class NotificationsFragment : Fragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("SetTextI18n")
-    private fun initTimePicker() {
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun initTimePicker2() {
         binding.timeTextView.text = "${BookMarkApplication.prefs.amOrPm} ${
             String.format(
                 "%02d",
@@ -157,24 +161,82 @@ class NotificationsFragment : Fragment() {
         }시 " +
                 "${String.format("%02d", BookMarkApplication.prefs.minute!!)}분"
 
-        val hour = BookMarkApplication.prefs.hour!!
-        binding.timePicker.hour = if (BookMarkApplication.prefs.amOrPm == "오후") hour + 12 else hour
-        binding.timePicker.minute = BookMarkApplication.prefs.minute!!
-        binding.timePicker.setOnTimeChangedListener { _, hourOfDay, minute ->
-            BookMarkApplication.prefs.hour = if (hourOfDay > 12) {
-                BookMarkApplication.prefs.amOrPm = "오후"
-                binding.timeTextView.text = "오후 ${String.format("%02d", hourOfDay - 12)}시" +
-                        " ${String.format("%02d", minute)}분"
-                hourOfDay - 12
-            } else {
-                BookMarkApplication.prefs.amOrPm = "오전"
-                binding.timeTextView.text = "오전 ${String.format("%02d", hourOfDay)}시" +
-                        " ${String.format("%02d", minute)}분"
-                hourOfDay
-            }
-            BookMarkApplication.prefs.minute = minute
+        binding.hourNumberPicker.value = BookMarkApplication.prefs.hour!!
+        binding.minuteNumberPicker.value = BookMarkApplication.prefs.minute!!
+        binding.amOrPmNumberPicker.value = BookMarkApplication.prefs.notificationGae!!
+        binding.hourNumberPicker.minValue = 1
+        binding.minuteNumberPicker.minValue = 0
+        binding.amOrPmNumberPicker.minValue = 0
+        binding.hourNumberPicker.maxValue = 12
+        binding.minuteNumberPicker.maxValue = 59
+        binding.amOrPmNumberPicker.maxValue = 1
+        binding.amOrPmNumberPicker.displayedValues = arrayOf("오전", "오후")
+
+
+        binding.hourNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+            BookMarkApplication.prefs.hour = newVal
+            binding.timeTextView.text = "${BookMarkApplication.prefs.amOrPm} ${
+                String.format(
+                    "%02d",
+                    BookMarkApplication.prefs.hour!!
+                )
+            }시 " +
+                    "${String.format("%02d", BookMarkApplication.prefs.minute!!)}분"
+        }
+        binding.minuteNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+            BookMarkApplication.prefs.minute = newVal
+            binding.timeTextView.text = "${BookMarkApplication.prefs.amOrPm} ${
+                String.format(
+                    "%02d",
+                    BookMarkApplication.prefs.hour!!
+                )
+            }시 " +
+                    "${String.format("%02d", BookMarkApplication.prefs.minute!!)}분"
+        }
+
+        binding.amOrPmNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+            if(newVal == 0){ BookMarkApplication.prefs.amOrPm = "오전" }
+            else{BookMarkApplication.prefs.amOrPm = "오후"}
+            binding.timeTextView.text = "${BookMarkApplication.prefs.amOrPm} ${
+                String.format(
+                    "%02d",
+                    BookMarkApplication.prefs.hour!!
+                )
+            }시 " +
+                    "${String.format("%02d", BookMarkApplication.prefs.minute!!)}분"
+
         }
     }
+
+//    @RequiresApi(Build.VERSION_CODES.M)
+//    @SuppressLint("SetTextI18n")
+//    private fun initTimePicker() {
+//        binding.timeTextView.text = "${BookMarkApplication.prefs.amOrPm} ${
+//            String.format(
+//                "%02d",
+//                BookMarkApplication.prefs.hour!!
+//            )
+//        }시 " +
+//                "${String.format("%02d", BookMarkApplication.prefs.minute!!)}분"
+//
+//        val hour = BookMarkApplication.prefs.hour!!
+//        binding.timePicker.hour = if (BookMarkApplication.prefs.amOrPm == "오후") hour + 12 else hour
+//        binding.timePicker.minute = BookMarkApplication.prefs.minute!!
+//        binding.timePicker.setOnTimeChangedListener { _, hourOfDay, minute ->
+//            BookMarkApplication.prefs.hour = if (hourOfDay > 12) {
+//                BookMarkApplication.prefs.amOrPm = "오후"
+//                binding.timeTextView.text = "오후 ${String.format("%02d", hourOfDay - 12)}시" +
+//                        " ${String.format("%02d", minute)}분"
+//                hourOfDay - 12
+//            } else {
+//                BookMarkApplication.prefs.amOrPm = "오전"
+//                binding.timeTextView.text = "오전 ${String.format("%02d", hourOfDay)}시" +
+//                        " ${String.format("%02d", minute)}분"
+//                hourOfDay
+//            }
+//            BookMarkApplication.prefs.minute = minute
+//        }
+//    }
 
     private fun updateRecyclerView() {
         viewModel.readAllData.observe(viewLifecycleOwner) { list ->

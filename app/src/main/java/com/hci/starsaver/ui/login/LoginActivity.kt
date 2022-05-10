@@ -1,19 +1,14 @@
 package com.hci.starsaver.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.hci.starsaver.databinding.ActivityLoginBinding
-import com.hci.starsaver.ui.home.PathName.Companion.HOME
-import com.hci.starsaver.ui.home.PathName.Companion.IS_FOLDER
-import com.hci.starsaver.ui.home.PathName.Companion.TITLE
-import com.hci.starsaver.ui.home.PathName.Companion.USERS
-import com.hci.starsaver.ui.home.PathName.Companion.USER_ID
-import com.hci.starsaver.ui.home.PathName.Companion.USER_NAME
+
 
 class LoginActivity:AppCompatActivity() {
 
@@ -42,6 +37,8 @@ class LoginActivity:AppCompatActivity() {
         binding.loginGuestButton.setOnClickListener { auth.signInAnonymously()
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    val intent = Intent(this, LoadingActivity::class.java)
+                    startActivity(intent)
                     handleSuccessLogin()
                 } else {
                     // If sign in fails, display a message to the user.
