@@ -9,8 +9,8 @@
     <View
         android:id="@+id/topView"
         android:layout_width="0dp"
-        android:background="@drawable/topview_image"
         android:layout_height="175dp"
+        android:background="@drawable/topview_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,40 +21,30 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="6dp"
         android:backgroundTint="#00000000"
-        android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
-        app:layout_constraintEnd_toStartOf="@id/folderImageView"
+        android:src="@drawable/ic_baseline_arrow_back_ios_new_24_white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/folderImageView"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_baseline_folder_open_24"
-        app:layout_constraintBottom_toBottomOf="@id/pathTextView"
-        app:layout_constraintEnd_toStartOf="@id/pathTextView"
-        app:layout_constraintStart_toEndOf="@id/backButton"
-        app:layout_constraintTop_toTopOf="@id/pathTextView" />
 
     <TextView
         android:id="@+id/pathTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="8dp"
         android:ellipsize="end"
         android:maxLines="2"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/backButton"
-        app:layout_constraintStart_toEndOf="@id/folderImageView"
+        app:layout_constraintStart_toEndOf="@id/backButton"
         app:layout_constraintTop_toTopOf="@id/backButton"
+        tools:layout_editor_absoluteX="110dp"
         tools:text="home" />
 
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="22dp"
         android:layout_marginTop="55dp"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -64,9 +54,11 @@
         tools:text="home" />
 
     <TextView
+        android:layout_marginTop="12dp"
         android:id="@+id/sizeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="@id/titleTextView"
         app:layout_constraintTop_toBottomOf="@id/titleTextView"
         tools:text="n개의 별이 담겨있어요" />
@@ -94,18 +86,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topView">
 
-        <Switch
+        <androidx.appcompat.widget.AppCompatToggleButton
             android:id="@+id/sortTypeSwitchButton"
-            android:layout_width="50dp"
-            android:layout_height="36dp"
+            android:layout_width="24dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="22dp"
+            android:background="@null"
+            android:button="@drawable/ic_sort"
+            android:textOff="@null"
+            android:textOn="@null"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         <TextView
             android:id="@+id/sortTypeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:textColor="@color/gray_cc"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:textColor="#242424"
             tools:text="만든 날짜 순" />
 
     </LinearLayout>
@@ -123,13 +121,16 @@
             android:id="@+id/searchImageView"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:src="@drawable/ic_baseline_search_24" />
+            android:layout_marginTop="18dp"
+            android:src="@drawable/ic_search" />
 
         <ImageView
             android:id="@+id/optionImageView"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:src="@drawable/ic_baseline_more_vert_24" />
+            android:layout_width="5dp"
+            android:layout_height="25dp"
+            android:layout_marginHorizontal="27dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/ic_menubar_button" />
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -155,6 +156,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="20dp"
                 android:paddingBottom="24dp"
                 app:layout_constraintBottom_toTopOf="@id/linkRecyclerView"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -167,6 +169,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="24dp"
                 android:orientation="vertical"
+                android:paddingBottom="80dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -179,11 +182,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/addFolder"
-        android:src="@drawable/ic_baseline_create_new_folder_24"
+        android:src="@drawable/ic_fab_folder"
+        app:backgroundTint="#E9EFF9"
         app:layout_constraintBottom_toBottomOf="@id/fabButton"
         app:layout_constraintEnd_toEndOf="@id/fabButton"
         app:layout_constraintStart_toStartOf="@id/fabButton"
-        app:layout_constraintTop_toTopOf="@id/fabButton" />
+        app:layout_constraintTop_toTopOf="@id/fabButton"
+        app:tint="#586A86" />
+
+
+    <ImageView
+        android:id="@+id/folderAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="135dp"
+        android:src="@drawable/ic_folder_add_info"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/fabButton"
+        app:layout_constraintEnd_toStartOf="@id/fabButton" />
+
+    <ImageView
+        android:id="@+id/bookmarkAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="70dp"
+        android:src="@drawable/ic_bookmark_add_info"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/fabButton"
+        app:layout_constraintEnd_toStartOf="@id/fabButton" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addLinkButton"
@@ -191,10 +219,12 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/addLink"
         android:src="@drawable/ic_baseline_star_border_24"
+        app:backgroundTint="#E9EFF9"
         app:layout_constraintBottom_toBottomOf="@id/fabButton"
         app:layout_constraintEnd_toEndOf="@id/fabButton"
         app:layout_constraintStart_toStartOf="@id/fabButton"
-        app:layout_constraintTop_toTopOf="@id/fabButton" />
+        app:layout_constraintTop_toTopOf="@id/fabButton"
+        app:tint="#586A86" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabButton"
@@ -204,9 +234,11 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:contentDescription="@string/add"
-        android:src="@drawable/ic_baseline_add_24"
+        android:src="@drawable/ic_fab_add"
+        app:backgroundTint="#123466"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/white" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

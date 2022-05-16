@@ -1,18 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.settings.SettingsFragment">
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/log_out"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:backgroundTint="#00000000"
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="설정"
+            android:textColor="#242424"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:clickable="false"
+            android:src="@drawable/ic_baseline_more_vert_24"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F0F0F0"
+            android:orientation="vertical">
+
+            <android.widget.Button
+                android:id="@+id/emailButton"
+                android:textAllCaps="false"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/button_setting_background"
+                android:paddingStart="28dp"
+                android:stateListAnimator="@null"
+                android:text="이메일 연동하기"
+                android:textAlignment="textStart"
+                android:textColor="#020202" />
+
+            <android.widget.Button
+                android:id="@+id/backUpButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/button_setting_background"
+                android:stateListAnimator="@null"
+                android:paddingStart="28dp"
+                android:text="백업하기"
+                android:textAlignment="textStart"
+                android:textColor="#020202" />
+
+            <android.widget.Button
+                android:id="@+id/dataUploadButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/button_setting_background"
+                android:stateListAnimator="@null"
+                android:paddingStart="28dp"
+                android:text="데이터 불러오기"
+                android:textAlignment="textStart"
+                android:textColor="#020202" />
+
+            <android.widget.Button
+                android:id="@+id/versionButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_setting_background"
+                android:stateListAnimator="@null"
+                android:paddingStart="28dp"
+                android:text="버전"
+                android:textAlignment="textStart"
+                android:textColor="#020202" />
+
+            <android.widget.Button
+                android:id="@+id/termsButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/button_setting_background"
+                android:stateListAnimator="@null"
+                android:paddingStart="28dp"
+                android:text="이용약관"
+                android:textAlignment="textStart"
+                android:textColor="#020202" />
+
+            <android.widget.Button
+                android:id="@+id/privacyButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/button_setting_background"
+                android:stateListAnimator="@null"
+                android:paddingStart="28dp"
+                android:text="개인정보처리방침"
+                android:textAlignment="textStart"
+                android:textColor="#020202" />
+
+            <android.widget.Button
+                android:id="@+id/askButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/button_setting_background"
+                android:stateListAnimator="@null"
+                android:paddingStart="28dp"
+                android:text="문의하기"
+                android:textAlignment="textStart"
+                android:textColor="#020202" />
+
+            <android.widget.Button
+                android:id="@+id/accountDeleteButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_setting_background"
+                android:stateListAnimator="@null"
+                android:paddingStart="28dp"
+                android:text="계정 삭제"
+                android:textAlignment="textStart"
+                android:textColor="#EF5252" />
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="2dp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF">
+
+                <android.widget.Button
+                    android:id="@+id/logoutButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/button_setting_background"
+                    android:stateListAnimator="@null"
+                    android:paddingStart="28dp"
+                    android:text="로그아웃"
+                    android:textAlignment="textStart"
+                    android:textColor="#020202" />
+            </FrameLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

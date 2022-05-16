@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import android.webkit.URLUtil
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -100,7 +101,7 @@ class HomeFragment : Fragment() {
                 starLinkList.forEach { linkList.addFirst(it) }
                 folderAdapter.setData(folderList)
                 linkAdapter.setData(linkList)
-                binding.sizeTextView.text = "${linkAdapter.currentList.size}개의 별이 담겨있어요"
+                binding.sizeTextView.text = "${linkList.size}개의 별이 담겨있어요"
                 binding.emptyTextView.visibility =
                     if (folderList.size + linkList.size == 0) View.VISIBLE else View.GONE
             }
@@ -126,26 +127,18 @@ class HomeFragment : Fragment() {
     private fun updateUI(it: BookMark) {
         if (it.id != 0L && it.isLink == 0) {
             isRoot = false
-            binding.topView.setBackgroundResource(R.color.gray_cc)
+            binding.topView.setBackgroundResource(R.drawable.topview_image2)
             binding.pathTextView.visibility = View.VISIBLE
             binding.backButton.visibility = View.VISIBLE
-            binding.folderImageView.visibility = View.VISIBLE
             binding.sizeTextView.visibility = View.VISIBLE
             binding.titleTextView.text = it.title
-            binding.titleTextView.setTextColor(resources.getColor(R.color.black))
             binding.pathTextView.text = viewModel.getPath()
-            animateHeightTo(binding.topView, 320)
-            animateHeightPosition(binding.searchLayout, -280f)
         } else {
-            isRoot = true
+            isRoot = true // 루트
             binding.topView.setBackgroundResource(R.drawable.topview_image)
             binding.sizeTextView.visibility = View.GONE
             binding.pathTextView.visibility = View.GONE
             binding.backButton.visibility = View.GONE
-            binding.folderImageView.visibility = View.GONE
-            binding.titleTextView.setTextColor(resources.getColor(R.color.white))
-            animateHeightTo(binding.topView, 475)
-            animateHeightPosition(binding.searchLayout, 0f)
         }
     }
 
@@ -200,10 +193,22 @@ class HomeFragment : Fragment() {
             ObjectAnimator.ofFloat(binding.addFolderButton, "translationY", 0f).apply { start() }
             ObjectAnimator.ofFloat(binding.addLinkButton, "translationY", 0f).apply { start() }
             ObjectAnimator.ofFloat(binding.fabButton, View.ROTATION, 45f, 0f).apply { start() }
+            val ani = AlphaAnimation(1.0f, 0.0f)
+            ani.setDuration(500)
+            binding.bookmarkAdd.visibility = View.GONE
+            binding.bookmarkAdd.setAnimation(ani)
+            binding.folderAdd.visibility = View.GONE
+            binding.folderAdd.setAnimation(ani)
         } else { // 플로팅 액션 버튼 열기 - 닫혀있는 플로팅 버튼 꺼내는 애니메이션
             ObjectAnimator.ofFloat(binding.addFolderButton, "translationY", -360f).apply { start() }
             ObjectAnimator.ofFloat(binding.addLinkButton, "translationY", -180f).apply { start() }
             ObjectAnimator.ofFloat(binding.fabButton, View.ROTATION, 0f, 45f).apply { start() }
+            val ani = AlphaAnimation(0.0f, 1.0f)
+            ani.setDuration(500)
+            binding.bookmarkAdd.visibility = View.VISIBLE
+            binding.bookmarkAdd.setAnimation(ani)
+            binding.folderAdd.visibility = View.VISIBLE
+            binding.folderAdd.setAnimation(ani)
         }
         isFabOpen = !isFabOpen
     }

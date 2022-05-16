@@ -25,7 +25,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/search"
+            android:hint="검색어를 입력하세요"
+            android:background="@null"
             android:imeOptions="actionDone"
             android:inputType="text" />
 
@@ -35,8 +36,14 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:backgroundTint="#00000000"
-            android:src="@drawable/ic_baseline_clear_24" />
+            android:src="@drawable/ic_x_mark" />
     </LinearLayout>
+
+    <View
+        android:id="@+id/lineView"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/gray_cc" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchRecyclerView"

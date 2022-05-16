@@ -6,20 +6,32 @@
 
     <ImageView
         android:id="@+id/folderImageView"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:src="@drawable/ic_baseline_folder_open_24"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:src="@drawable/ic_home_folder"
         app:layout_constraintBottom_toTopOf="@id/titleTextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="18dp"
+        android:layout_height="38dp"
+        android:button="@drawable/checkbox_selector"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/folderImageView"
+        app:layout_constraintEnd_toEndOf="@id/folderImageView"
+        app:layout_constraintStart_toStartOf="@id/folderImageView"
+        app:layout_constraintTop_toTopOf="@id/folderImageView" />
 
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="#242424"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

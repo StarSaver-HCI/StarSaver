@@ -7,7 +7,6 @@ import com.hci.starsaver.data.bookMark.BookMark
 import com.hci.starsaver.data.bookMark.BookMarkDao
 import com.hci.starsaver.data.bookMark.BookMarkDatabase
 import com.hci.starsaver.data.bookMark.BookMarkRepository
-import com.hci.starsaver.ui.home.PathName.Companion.HOME
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
