@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -24,9 +25,16 @@ class SettingsFragment : Fragment() {
     ): View {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
 
+        backButton()
         initAuth()
         initLogOutButton()
         return binding.root
+    }
+
+    private fun backButton(){
+        binding.backButton.setOnClickListener{
+            findNavController().popBackStack()
+        }
     }
 
     private fun initAuth() {

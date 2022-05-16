@@ -43,7 +43,16 @@ class AddLinkActivity:AppCompatActivity() {
         setContentView(binding.root)
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
-        // todo
+
+
+
+        dragToClose()
+        initButtons()
+        initAction()
+        initSpinner()
+    }
+
+    private fun dragToClose(){
         val view = binding.parentView
         var distance = 0f
         var oldY = 0f
@@ -64,7 +73,7 @@ class AddLinkActivity:AppCompatActivity() {
                             distance -= event.getY()
 
                             if(Math.abs(distance) < 500){binding.bottomSheetDashBoardLayout.animate().y(oldY)
-                            return false}
+                                return false}
                             if(distance < 0){ finish() }
                         }
                     }
@@ -72,12 +81,6 @@ class AddLinkActivity:AppCompatActivity() {
                 }
             })
         }
-        // todo
-
-
-        initButtons()
-        initAction()
-        initSpinner()
     }
 
     private fun addBitmap(link:BookMark){

@@ -6,6 +6,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +27,8 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
     private lateinit var binding: ActivityEditLinkBinding
     private lateinit var viewModel: HomeViewModel
     private lateinit var bm: BookMark
+    private var currentId = 0L
+    private var selectedParentId =0L
     private var isRemoved = false
     private var isEditing = false
 
@@ -35,6 +39,7 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
 
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
+        initSpinner()
         initLayout()
         initBeforeEdit()
     }
@@ -77,6 +82,49 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
         }
     }
 
+    private fun initSpinner() {
+        viewModel.readAllData.observe(this){
+            val idList = ArrayDeque<Long>()
+            val spinList = ArrayDeque<String>()
+            var b:BookMark? = null
+            it.forEach { bm->
+                if(bm.isLink==0) {
+                    if(bm.id == currentId) {
+                        b = bm
+                    }else{
+                        idList.addLast(bm.id!!)
+                        spinList.addLast(bm.title)
+                    }
+                }
+            }
+            if(b!=null){
+                idList.addFirst(b!!.id!!)
+                spinList.addFirst(b!!.title)
+            }else{
+                idList.addFirst(0)
+                spinList.addFirst("home")
+            }
+
+
+            val adapter = ArrayAdapter(this,
+                android.R.layout.simple_spinner_dropdown_item,
+                ArrayList<String>(spinList))
+            binding.spinner.adapter = adapter
+
+            binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    selectedParentId = idList[position]
+                }
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        }
+    }
+
     private fun initEdit() {
         isEditing=true
         binding.apply {
@@ -85,8 +133,15 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
             cancelButton.visibility=View.VISIBLE
             saveButton.visibility=View.VISIBLE
             cancelButton.setOnClickListener {
+                bm = intent.getSerializableExtra("BookMark") as BookMark
+                binding.titleTextView.setText(bm.title)
+                binding.linkTextView.setText(bm.link)
+                binding.descriptionEditText.setText(bm.description)
+                binding.starSwitch.isChecked = bm.isStar
+                binding.reminderSwitch.isChecked = bm.isRemind
                 currentFocus?.clearFocus()
                 initBeforeEdit()
+
             }
             saveButton.setOnClickListener {
                 currentFocus?.clearFocus()

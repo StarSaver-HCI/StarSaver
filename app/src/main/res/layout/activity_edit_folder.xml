@@ -139,6 +139,7 @@
             android:id="@+id/reminderSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:thumbTint="#FFFFFF"
             android:track="@drawable/switch_track_selector"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
     </LinearLayout>

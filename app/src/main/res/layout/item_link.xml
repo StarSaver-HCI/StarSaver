@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="62dp"
     android:layout_marginVertical="8dp"
+    android:layout_marginHorizontal="7dp"
     android:background="@drawable/link_item_shape"
     android:orientation="horizontal">
 
@@ -12,8 +13,8 @@
         android:id="@+id/imageView"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginVertical="3dp"
         android:background="@drawable/image_shape"
         android:src="@mipmap/ic_launcher_round"
         tools:ignore="ImageContrastCheck" />
@@ -41,19 +42,19 @@
 
     <ImageView
         android:id="@+id/starImageView"
-        android:layout_gravity="center"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_gravity="top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:visibility="invisible"
-        android:background="@drawable/ic_baseline_star_24"/>
+        android:background="@drawable/ic_bookmarked"/>
 
     <ImageButton
-        android:layout_marginEnd="16dp"
+        android:padding="15dp"
         android:layout_gravity="center_vertical"
         android:id="@+id/editButton"
-        android:layout_width="50dp"
+        android:layout_width="wrap_content"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_baseline_ios_share_24"
-        android:layout_height="50dp"/>
+        android:src="@drawable/ic_link"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import android.webkit.URLUtil
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -200,10 +201,22 @@ class HomeFragment : Fragment() {
             ObjectAnimator.ofFloat(binding.addFolderButton, "translationY", 0f).apply { start() }
             ObjectAnimator.ofFloat(binding.addLinkButton, "translationY", 0f).apply { start() }
             ObjectAnimator.ofFloat(binding.fabButton, View.ROTATION, 45f, 0f).apply { start() }
+            val ani = AlphaAnimation(1.0f, 0.0f)
+            ani.setDuration(500)
+            binding.bookmarkAdd.visibility = View.GONE
+            binding.bookmarkAdd.setAnimation(ani)
+            binding.folderAdd.visibility = View.GONE
+            binding.folderAdd.setAnimation(ani)
         } else { // 플로팅 액션 버튼 열기 - 닫혀있는 플로팅 버튼 꺼내는 애니메이션
             ObjectAnimator.ofFloat(binding.addFolderButton, "translationY", -360f).apply { start() }
             ObjectAnimator.ofFloat(binding.addLinkButton, "translationY", -180f).apply { start() }
             ObjectAnimator.ofFloat(binding.fabButton, View.ROTATION, 0f, 45f).apply { start() }
+            val ani = AlphaAnimation(0.0f, 1.0f)
+            ani.setDuration(500)
+            binding.bookmarkAdd.visibility = View.VISIBLE
+            binding.bookmarkAdd.setAnimation(ani)
+            binding.folderAdd.visibility = View.VISIBLE
+            binding.folderAdd.setAnimation(ani)
         }
         isFabOpen = !isFabOpen
     }

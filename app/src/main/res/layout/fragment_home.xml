@@ -54,7 +54,7 @@
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="22dp"
         android:layout_marginTop="55dp"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -94,19 +94,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topView">
 
-        <Switch
+        <androidx.appcompat.widget.AppCompatToggleButton
             android:id="@+id/sortTypeSwitchButton"
-            android:layout_width="50dp"
-            android:layout_height="36dp"
-            android:track="@drawable/switch_track_selector"
+            android:layout_width="24dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="22dp"
+            android:background="@null"
+            android:button="@drawable/ic_sort"
+            android:textOff="@null"
+            android:textOn="@null"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         <TextView
             android:id="@+id/sortTypeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:textColor="@color/gray_cc"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:textColor="#242424"
             tools:text="만든 날짜 순" />
 
     </LinearLayout>
@@ -124,13 +129,16 @@
             android:id="@+id/searchImageView"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:src="@drawable/ic_baseline_search_24" />
+            android:layout_marginTop="18dp"
+            android:src="@drawable/ic_search" />
 
         <ImageView
             android:id="@+id/optionImageView"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:src="@drawable/ic_baseline_more_vert_24" />
+            android:layout_width="5dp"
+            android:layout_height="25dp"
+            android:layout_marginHorizontal="27dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/ic_menubar_button" />
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -156,6 +164,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="20dp"
                 android:paddingBottom="24dp"
                 app:layout_constraintBottom_toTopOf="@id/linkRecyclerView"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -167,6 +176,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="24dp"
+                android:paddingBottom="80dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -180,11 +190,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/addFolder"
-        android:src="@drawable/ic_baseline_create_new_folder_24"
+        android:src="@drawable/ic_fab_folder"
+        app:tint="#586A86"
+        app:backgroundTint="#E9EFF9"
         app:layout_constraintBottom_toBottomOf="@id/fabButton"
         app:layout_constraintEnd_toEndOf="@id/fabButton"
         app:layout_constraintStart_toStartOf="@id/fabButton"
         app:layout_constraintTop_toTopOf="@id/fabButton" />
+
+
+    <ImageView
+        android:id="@+id/folderAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="135dp"
+        android:layout_marginEnd="5dp"
+        android:visibility="gone"
+        android:src="@drawable/ic_folder_add_info"
+        app:layout_constraintBottom_toBottomOf="@id/fabButton"
+        app:layout_constraintEnd_toStartOf="@id/fabButton"/>
+
+    <ImageView
+        android:id="@+id/bookmarkAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        android:layout_marginEnd="5dp"
+        android:visibility="gone"
+        android:src="@drawable/ic_bookmark_add_info"
+        app:layout_constraintBottom_toBottomOf="@id/fabButton"
+        app:layout_constraintEnd_toStartOf="@id/fabButton"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addLinkButton"
@@ -192,11 +227,12 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/addLink"
         android:src="@drawable/ic_baseline_star_border_24"
+        app:tint="#586A86"
+        app:backgroundTint="#E9EFF9"
         app:layout_constraintBottom_toBottomOf="@id/fabButton"
         app:layout_constraintEnd_toEndOf="@id/fabButton"
         app:layout_constraintStart_toStartOf="@id/fabButton"
         app:layout_constraintTop_toTopOf="@id/fabButton" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabButton"
         android:layout_width="wrap_content"
@@ -205,7 +241,9 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:contentDescription="@string/add"
-        android:src="@drawable/ic_baseline_add_24"
+        android:src="@drawable/ic_fab_add"
+        app:backgroundTint="#123466"
+        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

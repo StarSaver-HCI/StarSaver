@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hci.starsaver.R
 import com.hci.starsaver.config.BookMarkApplication
@@ -25,6 +26,12 @@ class NotificationsFragment : Fragment() {
     private var expanded = false
     private var timePicking = false
     private var numberPicking = false
+    private var week = 0
+    private var bun = 0
+    private var gae = 0
+    private var hour = 1
+    private var minute = 0
+    private var amOrPm = 0
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
@@ -35,6 +42,7 @@ class NotificationsFragment : Fragment() {
         binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         viewModel = HomeFragment.viewModel
 
+        backButton()
         initLayout()
         initButtons()
         updateRecyclerView()
@@ -42,10 +50,74 @@ class NotificationsFragment : Fragment() {
         return binding.root
     }
 
+    private fun backButton(){
+        binding.backButton.setOnClickListener{
+            findNavController().popBackStack()
+        }
+    }
+
     private fun initButtons() {
         binding.isAllFolderSwitchButton.setOnCheckedChangeListener { _, isChecked ->
             expanded = isChecked
             reloadList()
+        }
+
+        binding.cancelButton.setOnClickListener {
+            if(numberPicking){
+                binding.countTextView.text = "${BookMarkApplication.prefs.week}주     " +
+                        "${BookMarkApplication.prefs.notificationBun}번     " +
+                        "${BookMarkApplication.prefs.notificationGae}개"
+                week = BookMarkApplication.prefs.week!!
+                bun = BookMarkApplication.prefs.notificationBun!!
+                gae = BookMarkApplication.prefs.notificationGae!!
+                numberPicking = false
+                binding.countTextView.background = null
+                binding.numberPickerLayout.visibility = View.GONE
+                binding.buttonLayout.visibility = View.GONE
+                binding.SaveButton.isClickable = false
+                binding.cancelButton.isClickable = false
+            }
+            if(timePicking){
+                binding.timeTextView.text = "${BookMarkApplication.prefs.amOrPm}    " +
+                        "${String.format("%02d", BookMarkApplication.prefs.hour!!)}시    " +
+                        "${String.format("%02d", BookMarkApplication.prefs.minute!!)}분"
+                hour = BookMarkApplication.prefs.hour!!
+                minute = BookMarkApplication.prefs.minute!!
+                if(BookMarkApplication.prefs.amOrPm == "오전"){amOrPm = 0}
+                else{amOrPm = 1}
+                timePicking = false
+                binding.timeTextView.background = null
+                binding.timePickerLayout.visibility = View.GONE
+                binding.buttonLayout.visibility = View.GONE
+                binding.SaveButton.isClickable = false
+                binding.cancelButton.isClickable = false
+            }
+        }
+
+        binding.SaveButton.setOnClickListener {
+            if(numberPicking){
+                BookMarkApplication.prefs.week = week
+                BookMarkApplication.prefs.notificationBun = bun
+                BookMarkApplication.prefs.notificationGae = gae
+                numberPicking = false
+                binding.countTextView.background = null
+                binding.numberPickerLayout.visibility = View.GONE
+                binding.buttonLayout.visibility = View.GONE
+                binding.SaveButton.isClickable = false
+                binding.cancelButton.isClickable = false
+            }
+            if(timePicking){
+                BookMarkApplication.prefs.hour = hour
+                BookMarkApplication.prefs.minute = minute
+                if(amOrPm == 0){BookMarkApplication.prefs.amOrPm = "오전"}
+                else{BookMarkApplication.prefs.amOrPm = "오후"}
+                timePicking = false
+                binding.timeTextView.background = null
+                binding.timePickerLayout.visibility = View.GONE
+                binding.buttonLayout.visibility = View.GONE
+                binding.SaveButton.isClickable = false
+                binding.cancelButton.isClickable = false
+            }
         }
     }
 
@@ -78,13 +150,26 @@ class NotificationsFragment : Fragment() {
             if (numberPicking) {
                 numberPicking = false
                 it.background = null
+                binding.countTextView.text = "${BookMarkApplication.prefs.week}주     " +
+                        "${BookMarkApplication.prefs.notificationBun}번     " +
+                        "${BookMarkApplication.prefs.notificationGae}개"
+                week = BookMarkApplication.prefs.week!!
+                bun = BookMarkApplication.prefs.notificationBun!!
+                gae = BookMarkApplication.prefs.notificationGae!!
                 binding.numberPickerLayout.visibility = View.GONE
+                binding.buttonLayout.visibility = View.GONE
+                binding.SaveButton.isClickable = false
+                binding.cancelButton.isClickable = false
             } else {
                 numberPicking = true
+                timePicking = false
                 it.setBackgroundResource(R.drawable.gray_corner_background)
                 binding.timeTextView.background = null
                 binding.numberPickerLayout.visibility = View.VISIBLE
                 binding.timePickerLayout.visibility = View.GONE
+                binding.buttonLayout.visibility = View.VISIBLE
+                binding.SaveButton.isClickable = true
+                binding.cancelButton.isClickable = true
                 binding.weekNumberPicker.value = BookMarkApplication.prefs.week!!
                 binding.bunNumberPicker.value = BookMarkApplication.prefs.notificationBun!!
                 binding.gaeNumberPicker.value = BookMarkApplication.prefs.notificationGae!!
@@ -94,13 +179,27 @@ class NotificationsFragment : Fragment() {
             if (timePicking) {
                 timePicking = false
                 it.background = null
+                binding.timeTextView.text = "${BookMarkApplication.prefs.amOrPm}    " +
+                        "${String.format("%02d", BookMarkApplication.prefs.hour!!)}시    " +
+                        "${String.format("%02d", BookMarkApplication.prefs.minute!!)}분"
+                hour = BookMarkApplication.prefs.hour!!
+                minute = BookMarkApplication.prefs.minute!!
+                if(BookMarkApplication.prefs.amOrPm == "오전"){amOrPm = 0}
+                else{amOrPm = 1}
                 binding.timePickerLayout.visibility = View.GONE
+                binding.buttonLayout.visibility = View.GONE
+                binding.SaveButton.isClickable = false
+                binding.cancelButton.isClickable = false
             } else {
                 timePicking = true
+                numberPicking = false
                 it.setBackgroundResource(R.drawable.gray_corner_background)
                 binding.countTextView.background = null
                 binding.numberPickerLayout.visibility = View.GONE
                 binding.timePickerLayout.visibility = View.VISIBLE
+                binding.buttonLayout.visibility = View.VISIBLE
+                binding.SaveButton.isClickable = true
+                binding.cancelButton.isClickable = true
                 binding.hourNumberPicker.value = BookMarkApplication.prefs.hour!!
                 binding.minuteNumberPicker.value = BookMarkApplication.prefs.minute!!
                 if(BookMarkApplication.prefs.amOrPm!! == "오전") {binding.amOrPmNumberPicker.value = 0}
@@ -117,8 +216,8 @@ class NotificationsFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.M)
     private fun initNumberPicker() {
-        binding.countTextView.text = "${BookMarkApplication.prefs.week}주 " +
-                "${BookMarkApplication.prefs.notificationBun}번 " +
+        binding.countTextView.text = "${BookMarkApplication.prefs.week}주     " +
+                "${BookMarkApplication.prefs.notificationBun}번     " +
                 "${BookMarkApplication.prefs.notificationGae}개"
 
         binding.weekNumberPicker.value = BookMarkApplication.prefs.week!!
@@ -128,23 +227,30 @@ class NotificationsFragment : Fragment() {
         binding.bunNumberPicker.maxValue = 10
         binding.gaeNumberPicker.maxValue = 10
 
+        week = BookMarkApplication.prefs.week!!
+        bun = BookMarkApplication.prefs.notificationBun!!
+        gae = BookMarkApplication.prefs.notificationGae!!
+
         binding.weekNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
-            BookMarkApplication.prefs.week = newVal
-            binding.countTextView.text = "${newVal}주 " +
-                    "${BookMarkApplication.prefs.notificationBun}번 " +
-                    "${BookMarkApplication.prefs.notificationGae}개"
+            week = newVal
+//            BookMarkApplication.prefs.week = newVal
+            binding.countTextView.text = "${newVal}주     " +
+                    "${bun}번     " +
+                    "${gae}개"
         }
         binding.bunNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
-            BookMarkApplication.prefs.notificationBun = newVal
-            binding.countTextView.text = "${BookMarkApplication.prefs.week}주 " +
-                    "${newVal}번 " +
-                    "${BookMarkApplication.prefs.notificationGae}개"
+            bun = newVal
+//            BookMarkApplication.prefs.notificationBun = newVal
+            binding.countTextView.text = "${week}주     " +
+                    "${newVal}번     " +
+                    "${gae}개"
         }
 
         binding.gaeNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
-            BookMarkApplication.prefs.notificationGae = newVal
-            binding.countTextView.text = "${BookMarkApplication.prefs.week}주 " +
-                    "${BookMarkApplication.prefs.notificationBun}번 " +
+            gae = newVal
+//            BookMarkApplication.prefs.notificationGae = newVal
+            binding.countTextView.text = "${week}주     " +
+                    "${bun}번     " +
                     "${newVal}개"
 
         }
@@ -153,17 +259,11 @@ class NotificationsFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.M)
     private fun initTimePicker2() {
-        binding.timeTextView.text = "${BookMarkApplication.prefs.amOrPm} ${
-            String.format(
-                "%02d",
-                BookMarkApplication.prefs.hour!!
-            )
-        }시 " +
+        binding.timeTextView.text = "${BookMarkApplication.prefs.amOrPm}    " +
+                "${String.format("%02d", BookMarkApplication.prefs.hour!!)}시    " +
                 "${String.format("%02d", BookMarkApplication.prefs.minute!!)}분"
 
-        binding.hourNumberPicker.value = BookMarkApplication.prefs.hour!!
-        binding.minuteNumberPicker.value = BookMarkApplication.prefs.minute!!
-        binding.amOrPmNumberPicker.value = BookMarkApplication.prefs.notificationGae!!
+
         binding.hourNumberPicker.minValue = 1
         binding.minuteNumberPicker.minValue = 0
         binding.amOrPmNumberPicker.minValue = 0
@@ -171,39 +271,38 @@ class NotificationsFragment : Fragment() {
         binding.minuteNumberPicker.maxValue = 59
         binding.amOrPmNumberPicker.maxValue = 1
         binding.amOrPmNumberPicker.displayedValues = arrayOf("오전", "오후")
+        binding.hourNumberPicker.value = BookMarkApplication.prefs.hour!!
+        binding.minuteNumberPicker.value = BookMarkApplication.prefs.minute!!
+        if(BookMarkApplication.prefs.amOrPm == "오전"){binding.amOrPmNumberPicker.value = 0}
+        else{binding.amOrPmNumberPicker.value = 1}
+
+        hour = binding.hourNumberPicker.value
+        minute = binding.minuteNumberPicker.value
+        amOrPm = binding.amOrPmNumberPicker.value
 
 
         binding.hourNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
-            BookMarkApplication.prefs.hour = newVal
-            binding.timeTextView.text = "${BookMarkApplication.prefs.amOrPm} ${
-                String.format(
-                    "%02d",
-                    BookMarkApplication.prefs.hour!!
-                )
-            }시 " +
-                    "${String.format("%02d", BookMarkApplication.prefs.minute!!)}분"
+            hour = newVal
+//            BookMarkApplication.prefs.hour = newVal
+            binding.timeTextView.text = "${if(amOrPm == 0){"오전"} else{"오후"}}    " +
+                    "${String.format("%02d", newVal)}시    " +
+                    "${String.format("%02d", minute)}분"
         }
         binding.minuteNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
-            BookMarkApplication.prefs.minute = newVal
-            binding.timeTextView.text = "${BookMarkApplication.prefs.amOrPm} ${
-                String.format(
-                    "%02d",
-                    BookMarkApplication.prefs.hour!!
-                )
-            }시 " +
-                    "${String.format("%02d", BookMarkApplication.prefs.minute!!)}분"
+            minute = newVal
+//            BookMarkApplication.prefs.minute = newVal
+            binding.timeTextView.text = "${if(amOrPm == 0){"오전"} else{"오후"}}    " +
+                    "${String.format("%02d", hour)}시    " +
+                    "${String.format("%02d", newVal)}분"
         }
 
         binding.amOrPmNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
-            if(newVal == 0){ BookMarkApplication.prefs.amOrPm = "오전" }
-            else{BookMarkApplication.prefs.amOrPm = "오후"}
-            binding.timeTextView.text = "${BookMarkApplication.prefs.amOrPm} ${
-                String.format(
-                    "%02d",
-                    BookMarkApplication.prefs.hour!!
-                )
-            }시 " +
-                    "${String.format("%02d", BookMarkApplication.prefs.minute!!)}분"
+            amOrPm = newVal
+//            if(newVal == 0){ BookMarkApplication.prefs.amOrPm = "오전" }
+//            else{BookMarkApplication.prefs.amOrPm = "오후"}
+            binding.timeTextView.text = "${if(newVal == 0){"오전"} else{"오후"}}    " +
+                    "${String.format("%02d", hour)}시    " +
+                    "${String.format("%02d", minute)}분"
 
         }
     }
