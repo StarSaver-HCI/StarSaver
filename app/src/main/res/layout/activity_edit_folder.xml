@@ -162,7 +162,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:background="@drawable/button_cancel"
-            android:text="@string/cancelString"
             android:textColor="@color/black"
             android:visibility="invisible"
             tools:visibility="visible" />
@@ -171,9 +170,7 @@
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_ok_selector"
-            android:text="@string/saveString"
-            android:textColor="@color/white"
+            android:background="@drawable/button_save"
             android:visibility="invisible"
             tools:visibility="visible" />
     </LinearLayout>
