@@ -101,7 +101,7 @@ class HomeFragment : Fragment() {
                 starLinkList.forEach { linkList.addFirst(it) }
                 folderAdapter.setData(folderList)
                 linkAdapter.setData(linkList)
-                binding.sizeTextView.text = "${linkAdapter.currentList.size}개의 별이 담겨있어요"
+                binding.sizeTextView.text = "${linkList.size}개의 별이 담겨있어요"
                 binding.emptyTextView.visibility =
                     if (folderList.size + linkList.size == 0) View.VISIBLE else View.GONE
             }
@@ -127,26 +127,18 @@ class HomeFragment : Fragment() {
     private fun updateUI(it: BookMark) {
         if (it.id != 0L && it.isLink == 0) {
             isRoot = false
-            binding.topView.setBackgroundResource(R.color.gray_cc)
+            binding.topView.setBackgroundResource(R.drawable.topview_image2)
             binding.pathTextView.visibility = View.VISIBLE
             binding.backButton.visibility = View.VISIBLE
-            binding.folderImageView.visibility = View.VISIBLE
             binding.sizeTextView.visibility = View.VISIBLE
             binding.titleTextView.text = it.title
-            binding.titleTextView.setTextColor(resources.getColor(R.color.black))
             binding.pathTextView.text = viewModel.getPath()
-            animateHeightTo(binding.topView, 320)
-            animateHeightPosition(binding.searchLayout, -280f)
         } else {
-            isRoot = true
+            isRoot = true // 루트
             binding.topView.setBackgroundResource(R.drawable.topview_image)
             binding.sizeTextView.visibility = View.GONE
             binding.pathTextView.visibility = View.GONE
             binding.backButton.visibility = View.GONE
-            binding.folderImageView.visibility = View.GONE
-            binding.titleTextView.setTextColor(resources.getColor(R.color.white))
-            animateHeightTo(binding.topView, 475)
-            animateHeightPosition(binding.searchLayout, 0f)
         }
     }
 
