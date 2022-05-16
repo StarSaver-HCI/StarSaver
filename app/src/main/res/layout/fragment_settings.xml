@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -54,12 +53,14 @@
 
             <android.widget.Button
                 android:id="@+id/emailButton"
+                android:textAllCaps="false"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="2dp"
                 android:background="@drawable/button_setting_background"
+                android:paddingStart="28dp"
                 android:stateListAnimator="@null"
-                android:text="         이메일 연동하기"
+                android:text="이메일 연동하기"
                 android:textAlignment="textStart"
                 android:textColor="#020202" />
 
@@ -70,7 +71,8 @@
                 android:layout_marginTop="2dp"
                 android:background="@drawable/button_setting_background"
                 android:stateListAnimator="@null"
-                android:text="         백업하기"
+                android:paddingStart="28dp"
+                android:text="백업하기"
                 android:textAlignment="textStart"
                 android:textColor="#020202" />
 
@@ -81,7 +83,8 @@
                 android:layout_marginTop="2dp"
                 android:background="@drawable/button_setting_background"
                 android:stateListAnimator="@null"
-                android:text="         데이터 불러오기"
+                android:paddingStart="28dp"
+                android:text="데이터 불러오기"
                 android:textAlignment="textStart"
                 android:textColor="#020202" />
 
@@ -92,7 +95,8 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_setting_background"
                 android:stateListAnimator="@null"
-                android:text="         버전"
+                android:paddingStart="28dp"
+                android:text="버전"
                 android:textAlignment="textStart"
                 android:textColor="#020202" />
 
@@ -103,7 +107,8 @@
                 android:layout_marginTop="2dp"
                 android:background="@drawable/button_setting_background"
                 android:stateListAnimator="@null"
-                android:text="         이용약관"
+                android:paddingStart="28dp"
+                android:text="이용약관"
                 android:textAlignment="textStart"
                 android:textColor="#020202" />
 
@@ -114,7 +119,8 @@
                 android:layout_marginTop="2dp"
                 android:background="@drawable/button_setting_background"
                 android:stateListAnimator="@null"
-                android:text="         개인정보처리방침"
+                android:paddingStart="28dp"
+                android:text="개인정보처리방침"
                 android:textAlignment="textStart"
                 android:textColor="#020202" />
 
@@ -125,7 +131,8 @@
                 android:layout_marginTop="2dp"
                 android:background="@drawable/button_setting_background"
                 android:stateListAnimator="@null"
-                android:text="         문의하기"
+                android:paddingStart="28dp"
+                android:text="문의하기"
                 android:textAlignment="textStart"
                 android:textColor="#020202" />
 
@@ -136,7 +143,8 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_setting_background"
                 android:stateListAnimator="@null"
-                android:text="         계정 삭제"
+                android:paddingStart="28dp"
+                android:text="계정 삭제"
                 android:textAlignment="textStart"
                 android:textColor="#EF5252" />
 
@@ -156,7 +164,8 @@
                     android:layout_height="60dp"
                     android:background="@drawable/button_setting_background"
                     android:stateListAnimator="@null"
-                    android:text="         로그아웃"
+                    android:paddingStart="28dp"
+                    android:text="로그아웃"
                     android:textAlignment="textStart"
                     android:textColor="#020202" />
             </FrameLayout>
