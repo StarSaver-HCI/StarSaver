@@ -3,7 +3,7 @@ package com.hci.starsaver.ui.addlink
 import android.R
 import android.app.Dialog
 import android.content.Intent
-import android.graphics.Rect
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -14,9 +14,7 @@ import android.view.Window
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.hci.starsaver.data.bookMark.BookMark
 import com.hci.starsaver.databinding.ActivityAddLinkBinding
@@ -29,12 +27,12 @@ import kotlinx.coroutines.launch
 import net.mm2d.touchicon.TouchIconExtractor
 
 
-class AddLinkActivity:AppCompatActivity() {
+class AddLinkActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityAddLinkBinding
     lateinit var viewModel: HomeViewModel
     private var currentId = 0L
-    private var selectedParentId =0L
+    private var selectedParentId = 0L
     private var isExternal = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +50,7 @@ class AddLinkActivity:AppCompatActivity() {
         initSpinner()
     }
 
-    private fun dragToClose(){
+    private fun dragToClose() {
         val view = binding.parentView
         var distance = 0f
         var oldY = 0f
@@ -65,16 +63,20 @@ class AddLinkActivity:AppCompatActivity() {
                             oldY = binding.bottomSheetDashBoardLayout.getY()
                         }
                         MotionEvent.ACTION_MOVE -> {
-                            if(distance-event.getY() < 0){
+                            if (distance - event.getY() < 0) {
                                 binding.bottomSheetDashBoardLayout.setY(oldY - (distance - event.getY()))
                             }
                         }
                         MotionEvent.ACTION_UP -> {
                             distance -= event.getY()
 
-                            if(Math.abs(distance) < 500){binding.bottomSheetDashBoardLayout.animate().y(oldY)
-                                return false}
-                            if(distance < 0){ finish() }
+                            if (Math.abs(distance) < 500) {
+                                binding.bottomSheetDashBoardLayout.animate().y(oldY)
+                                return false
+                            }
+                            if (distance < 0) {
+                                finish()
+                            }
                         }
                     }
                     return true
@@ -83,15 +85,15 @@ class AddLinkActivity:AppCompatActivity() {
         }
     }
 
-    private fun addBitmap(link:BookMark){
+    private fun addBitmap(link: BookMark) {
         val extractor = TouchIconExtractor()
-        var url:String?= null
+        var url: String? = null
         GlobalScope.launch(Dispatchers.IO) {
             extractor.fromPage(link.link!!, true)
-                .let{
-                    if(it.isNotEmpty()) url = it.last().url
-            }
-            if(url!=null){
+                .let {
+                    if (it.isNotEmpty()) url = it.last().url
+                }
+            if (url != null) {
                 link.bitmap = ImageDownloadManager.getImage(url!!)
             }
             viewModel.addBookMark(link)
@@ -108,26 +110,29 @@ class AddLinkActivity:AppCompatActivity() {
     }
 
     private fun initButtons() {
-        binding.saveButton.isEnabled = binding.linkEditText.text.isNotBlank() && binding.linkNameEditText.text.isNotBlank()
-        currentId = intent.getLongExtra("id",0)
+        binding.saveButton.isEnabled =
+            binding.linkEditText.text.isNotBlank() && binding.linkNameEditText.text.isNotBlank()
+        currentId = intent.getLongExtra("id", 0)
         selectedParentId = currentId
 
         binding.saveButton.setOnClickListener {
             val isRemind = binding.reminderSwitch.isChecked
             val isStared = binding.starSwitch.isChecked
-            val bm = BookMark(null
-                ,selectedParentId
-                ,binding.linkNameEditText.text.toString()
-                ,binding.descriptionEditText.text.toString()
-                ,1
-                , binding.linkEditText.text.toString()
-                ,isRemind
-                ,isStared
+            val bm = BookMark(
+                null,
+                selectedParentId,
+                binding.linkNameEditText.text.toString(),
+                binding.descriptionEditText.text.toString(),
+                1,
+                binding.linkEditText.text.toString(),
+                isRemind,
+                isStared,
+                bitmap = BitmapFactory.decodeResource(resources, com.hci.starsaver.R.drawable.icon)
             )
 
             // 앱 외부에서 링크 추가할 때
-            if(isExternal) Toast.makeText(this,"링크를 저장했습니다.",Toast.LENGTH_SHORT).show()
-            else{
+            if (isExternal) Toast.makeText(this, "링크를 저장했습니다.", Toast.LENGTH_SHORT).show()
+            else {
                 showAddLinkPopup()
             }
             //추가 후 팝업의 시간을 벌기 위해서 핸들러 사용
@@ -144,14 +149,16 @@ class AddLinkActivity:AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-                binding.saveButton.isEnabled = binding.linkEditText.text.isNotBlank() && binding.linkNameEditText.text.isNotBlank()
+                binding.saveButton.isEnabled =
+                    binding.linkEditText.text.isNotBlank() && binding.linkNameEditText.text.isNotBlank()
             }
         })
         binding.linkNameEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-                binding.saveButton.isEnabled = binding.linkEditText.text.isNotBlank() && binding.linkNameEditText.text.isNotBlank()
+                binding.saveButton.isEnabled =
+                    binding.linkEditText.text.isNotBlank() && binding.linkNameEditText.text.isNotBlank()
             }
         })
     }
@@ -174,32 +181,34 @@ class AddLinkActivity:AppCompatActivity() {
     }
 
     private fun initSpinner() {
-        viewModel.readAllData.observe(this){
+        viewModel.readAllData.observe(this) {
             val idList = ArrayDeque<Long>()
             val spinList = ArrayDeque<String>()
-            var b:BookMark? = null
-            it.forEach { bm->
-                if(bm.isLink==0) {
-                    if(bm.id == currentId) {
+            var b: BookMark? = null
+            it.forEach { bm ->
+                if (bm.isLink == 0) {
+                    if (bm.id == currentId) {
                         b = bm
-                    }else{
+                    } else {
                         idList.addLast(bm.id!!)
                         spinList.addLast(bm.title)
                     }
                 }
             }
-            if(b!=null){
+            if (b != null) {
                 idList.addFirst(b!!.id!!)
                 spinList.addFirst(b!!.title)
-            }else{
+            } else {
                 idList.addFirst(0)
                 spinList.addFirst("home")
             }
 
 
-            val adapter = ArrayAdapter(this,
+            val adapter = ArrayAdapter(
+                this,
                 R.layout.simple_spinner_dropdown_item,
-                ArrayList<String>(spinList))
+                ArrayList<String>(spinList)
+            )
             binding.spinner.adapter = adapter
 
             binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -211,6 +220,7 @@ class AddLinkActivity:AppCompatActivity() {
                 ) {
                     selectedParentId = idList[position]
                 }
+
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         }
