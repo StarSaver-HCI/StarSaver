@@ -79,7 +79,6 @@ class LinkAdapter : ListAdapter<BookMark, LinkAdapter.ViewHolder>(diffUtil) {
     @SuppressLint("NotifyDataSetChanged")
     fun setData(list: List<BookMark>) {
         submitList(list)
-        notifyDataSetChanged()
     }
 
     fun setOnLinkClickedListener(lambda: (BookMark) -> Unit) {
