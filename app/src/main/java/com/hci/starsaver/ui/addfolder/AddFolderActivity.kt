@@ -7,8 +7,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
-import android.widget.ScrollView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -48,16 +46,20 @@ class AddFolderActivity : AppCompatActivity() {
                             oldY = binding.wholeLayout.getY()
                         }
                         MotionEvent.ACTION_MOVE -> {
-                            if(distance-event.getY() < 0){
+                            if (distance - event.getY() < 0) {
                                 binding.wholeLayout.setY(oldY - (distance - event.getY()))
                             }
                         }
                         MotionEvent.ACTION_UP -> {
                             distance -= event.getY()
 
-                            if(Math.abs(distance) < 300){binding.wholeLayout.animate().y(oldY)
-                                return false}
-                            if(distance < 0){ finish() }
+                            if (Math.abs(distance) < 300) {
+                                binding.wholeLayout.animate().y(oldY)
+                                return false
+                            }
+                            if (distance < 0) {
+                                finish()
+                            }
                         }
                     }
                     return true
