@@ -67,7 +67,7 @@ class NotificationsFragment : Fragment() {
             expanded = true
             binding.isAllFolderSwitchButton.visibility = View.GONE
             binding.buttonLayout.visibility = View.VISIBLE
-            binding.SaveButton.isClickable = true
+            binding.saveButton.isClickable = true
             binding.cancelButton.isClickable = true
             showList()
         }
@@ -84,7 +84,7 @@ class NotificationsFragment : Fragment() {
                 binding.countTextView.background = null
                 binding.numberPickerLayout.visibility = View.GONE
                 binding.buttonLayout.visibility = View.GONE
-                binding.SaveButton.isClickable = false
+                binding.saveButton.isClickable = false
                 binding.cancelButton.isClickable = false
                 binding.isAllFolderSwitchButton.visibility = View.VISIBLE
             }
@@ -103,7 +103,7 @@ class NotificationsFragment : Fragment() {
                 binding.timeTextView.background = null
                 binding.timePickerLayout.visibility = View.GONE
                 binding.buttonLayout.visibility = View.GONE
-                binding.SaveButton.isClickable = false
+                binding.saveButton.isClickable = false
                 binding.cancelButton.isClickable = false
                 binding.isAllFolderSwitchButton.visibility = View.VISIBLE
             }
@@ -111,13 +111,13 @@ class NotificationsFragment : Fragment() {
                 expanded = false
                 binding.isAllFolderSwitchButton.visibility = View.VISIBLE
                 binding.buttonLayout.visibility = View.GONE
-                binding.SaveButton.isClickable = false
+                binding.saveButton.isClickable = false
                 binding.cancelButton.isClickable = false
                 showList()
             }
         }
 
-        binding.SaveButton.setOnClickListener {
+        binding.saveButton.setOnClickListener {
             if (numberPicking) {
                 BookMarkApplication.prefs.week = week
                 BookMarkApplication.prefs.notificationBun = bun
@@ -126,7 +126,7 @@ class NotificationsFragment : Fragment() {
                 binding.countTextView.background = null
                 binding.numberPickerLayout.visibility = View.GONE
                 binding.buttonLayout.visibility = View.GONE
-                binding.SaveButton.isClickable = false
+                binding.saveButton.isClickable = false
                 binding.cancelButton.isClickable = false
                 binding.isAllFolderSwitchButton.visibility = View.VISIBLE
             }
@@ -142,7 +142,7 @@ class NotificationsFragment : Fragment() {
                 binding.timeTextView.background = null
                 binding.timePickerLayout.visibility = View.GONE
                 binding.buttonLayout.visibility = View.GONE
-                binding.SaveButton.isClickable = false
+                binding.saveButton.isClickable = false
                 binding.cancelButton.isClickable = false
                 binding.isAllFolderSwitchButton.visibility = View.VISIBLE
             }
@@ -156,7 +156,7 @@ class NotificationsFragment : Fragment() {
                 expanded = false
                 binding.isAllFolderSwitchButton.visibility = View.VISIBLE
                 binding.buttonLayout.visibility = View.GONE
-                binding.SaveButton.isClickable = false
+                binding.saveButton.isClickable = false
                 binding.cancelButton.isClickable = false
                 showList()
             }
@@ -192,7 +192,7 @@ class NotificationsFragment : Fragment() {
                 gae = BookMarkApplication.prefs.notificationGae!!
                 binding.numberPickerLayout.visibility = View.GONE
                 binding.buttonLayout.visibility = View.GONE
-                binding.SaveButton.isClickable = false
+                binding.saveButton.isClickable = false
                 binding.cancelButton.isClickable = false
             } else {
                 numberPicking = true
@@ -202,7 +202,7 @@ class NotificationsFragment : Fragment() {
                 binding.numberPickerLayout.visibility = View.VISIBLE
                 binding.timePickerLayout.visibility = View.GONE
                 binding.buttonLayout.visibility = View.VISIBLE
-                binding.SaveButton.isClickable = true
+                binding.saveButton.isClickable = true
                 binding.cancelButton.isClickable = true
                 binding.weekNumberPicker.value = BookMarkApplication.prefs.week!!
                 binding.bunNumberPicker.value = BookMarkApplication.prefs.notificationBun!!
@@ -225,7 +225,7 @@ class NotificationsFragment : Fragment() {
                 }
                 binding.timePickerLayout.visibility = View.GONE
                 binding.buttonLayout.visibility = View.GONE
-                binding.SaveButton.isClickable = false
+                binding.saveButton.isClickable = false
                 binding.cancelButton.isClickable = false
             } else {
                 timePicking = true
@@ -235,7 +235,7 @@ class NotificationsFragment : Fragment() {
                 binding.numberPickerLayout.visibility = View.GONE
                 binding.timePickerLayout.visibility = View.VISIBLE
                 binding.buttonLayout.visibility = View.VISIBLE
-                binding.SaveButton.isClickable = true
+                binding.saveButton.isClickable = true
                 binding.cancelButton.isClickable = true
                 binding.hourNumberPicker.value = BookMarkApplication.prefs.hour!!
                 binding.minuteNumberPicker.value = BookMarkApplication.prefs.minute!!
