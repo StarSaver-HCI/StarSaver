@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +33,7 @@ class NotificationsFragment : Fragment() {
     private var hour = 1
     private var minute = 0
     private var amOrPm = 0
+    private lateinit var tempSet: MutableSet<BookMark>
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
@@ -42,6 +44,7 @@ class NotificationsFragment : Fragment() {
         binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         viewModel = HomeFragment.viewModel
 
+        tempSet = mutableSetOf()
         backButton()
         initLayout()
         initButtons()
@@ -57,8 +60,13 @@ class NotificationsFragment : Fragment() {
     }
 
     private fun initButtons() {
-        binding.isAllFolderSwitchButton.setOnCheckedChangeListener { _, isChecked ->
-            expanded = isChecked
+        binding.isAllFolderSwitchButton.setOnClickListener {
+            expanded = true
+            binding.isAllFolderSwitchButton.visibility = View.GONE
+            binding.buttonLayout.visibility = View.VISIBLE
+            binding.SaveButton.isClickable = true
+            binding.cancelButton.isClickable = true
+            tempSet.clear()
             reloadList()
         }
 
@@ -76,6 +84,7 @@ class NotificationsFragment : Fragment() {
                 binding.buttonLayout.visibility = View.GONE
                 binding.SaveButton.isClickable = false
                 binding.cancelButton.isClickable = false
+                binding.isAllFolderSwitchButton.visibility = View.VISIBLE
             }
             if(timePicking){
                 binding.timeTextView.text = "${BookMarkApplication.prefs.amOrPm}    " +
@@ -88,6 +97,14 @@ class NotificationsFragment : Fragment() {
                 timePicking = false
                 binding.timeTextView.background = null
                 binding.timePickerLayout.visibility = View.GONE
+                binding.buttonLayout.visibility = View.GONE
+                binding.SaveButton.isClickable = false
+                binding.cancelButton.isClickable = false
+                binding.isAllFolderSwitchButton.visibility = View.VISIBLE
+            }
+            if(expanded){
+                expanded = false
+                binding.isAllFolderSwitchButton.visibility = View.VISIBLE
                 binding.buttonLayout.visibility = View.GONE
                 binding.SaveButton.isClickable = false
                 binding.cancelButton.isClickable = false
@@ -105,6 +122,7 @@ class NotificationsFragment : Fragment() {
                 binding.buttonLayout.visibility = View.GONE
                 binding.SaveButton.isClickable = false
                 binding.cancelButton.isClickable = false
+                binding.isAllFolderSwitchButton.visibility = View.VISIBLE
             }
             if(timePicking){
                 BookMarkApplication.prefs.hour = hour
@@ -114,6 +132,22 @@ class NotificationsFragment : Fragment() {
                 timePicking = false
                 binding.timeTextView.background = null
                 binding.timePickerLayout.visibility = View.GONE
+                binding.buttonLayout.visibility = View.GONE
+                binding.SaveButton.isClickable = false
+                binding.cancelButton.isClickable = false
+                binding.isAllFolderSwitchButton.visibility = View.VISIBLE
+            }
+            if(expanded){
+                for(folder in tempSet){
+                    folder.isRemind = folder.isRemind.not()
+                    viewModel.addBookMark(folder)
+                    if (folder.id == 0L) {
+                        BookMarkApplication.prefs.homeIsRemind = folder.isRemind
+                    }
+                }
+
+                expanded = false
+                binding.isAllFolderSwitchButton.visibility = View.VISIBLE
                 binding.buttonLayout.visibility = View.GONE
                 binding.SaveButton.isClickable = false
                 binding.cancelButton.isClickable = false
@@ -132,10 +166,11 @@ class NotificationsFragment : Fragment() {
         adapter = RemindFolderAdapter()
         adapter.onCheckedListener = object : RemindFolderAdapter.OnCheckedListener {
             override fun onItemClicked(folder: BookMark, view: View) {
-                folder.isRemind = folder.isRemind.not()
-                viewModel.addBookMark(folder)
-                if (folder.id == 0L) {
-                    BookMarkApplication.prefs.homeIsRemind = folder.isRemind
+                if(tempSet.contains(folder)){
+                    tempSet.remove(folder)
+                }
+                else{
+                    tempSet.add(folder)
                 }
             }
         }
@@ -160,6 +195,7 @@ class NotificationsFragment : Fragment() {
                 binding.buttonLayout.visibility = View.GONE
                 binding.SaveButton.isClickable = false
                 binding.cancelButton.isClickable = false
+                binding.isAllFolderSwitchButton.visibility = View.VISIBLE
             } else {
                 numberPicking = true
                 timePicking = false
@@ -173,6 +209,7 @@ class NotificationsFragment : Fragment() {
                 binding.weekNumberPicker.value = BookMarkApplication.prefs.week!!
                 binding.bunNumberPicker.value = BookMarkApplication.prefs.notificationBun!!
                 binding.gaeNumberPicker.value = BookMarkApplication.prefs.notificationGae!!
+                binding.isAllFolderSwitchButton.visibility = View.GONE
             }
         }
         binding.timeTextView.setOnClickListener {
@@ -190,6 +227,7 @@ class NotificationsFragment : Fragment() {
                 binding.buttonLayout.visibility = View.GONE
                 binding.SaveButton.isClickable = false
                 binding.cancelButton.isClickable = false
+                binding.isAllFolderSwitchButton.visibility = View.VISIBLE
             } else {
                 timePicking = true
                 numberPicking = false
@@ -204,6 +242,7 @@ class NotificationsFragment : Fragment() {
                 binding.minuteNumberPicker.value = BookMarkApplication.prefs.minute!!
                 if(BookMarkApplication.prefs.amOrPm!! == "오전") {binding.amOrPmNumberPicker.value = 0}
                 else {binding.amOrPmNumberPicker.value = 1}
+                binding.isAllFolderSwitchButton.visibility = View.GONE
             }
         }
 

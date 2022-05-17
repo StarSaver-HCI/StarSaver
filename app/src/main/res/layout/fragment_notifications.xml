@@ -83,7 +83,8 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -279,36 +280,6 @@
                 android:background="@color/gray_cc" />
 
             <LinearLayout
-                android:id="@+id/buttonLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:visibility="gone"
-                android:gravity="right"
-                android:orientation="horizontal">
-
-                <android.widget.Button
-                    android:id="@+id/cancelButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginRight="10dp"
-                    android:clickable="false"
-                    android:background="@drawable/button_cancel" />
-
-                <android.widget.Button
-                    android:id="@+id/SaveButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:clickable="false"
-                    android:background="@drawable/button_save" />
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/starLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -332,14 +303,11 @@
                     android:textColor="#505050"
                     android:textSize="18sp" />
 
-                <Switch
+                <android.widget.Button
                     android:id="@+id/isAllFolderSwitchButton"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:background="@drawable/expanded_selector"
-                    android:thumb="@null"
-                    android:track="@null"
-                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+                    android:background="@drawable/ic_edit_pencil" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -349,38 +317,37 @@
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginVertical="14dp"/>
 
-            <LinearLayout
-                android:id="@+id/folderButtonLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:gravity="right"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <android.widget.Button
-                    android:id="@+id/folderCancelButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/button_cancel"
-                    android:clickable="false" />
-
-                <android.widget.Button
-                    android:id="@+id/folderSaveButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/button_save"
-                    android:clickable="false" />
-            </LinearLayout>
-
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <android.widget.Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/button_cancel"
+            android:clickable="false" />
+
+        <android.widget.Button
+            android:id="@+id/SaveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/button_save"
+            android:clickable="false" />
+    </LinearLayout>
 
 </LinearLayout>
