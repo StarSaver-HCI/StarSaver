@@ -1,6 +1,8 @@
 package com.hci.starsaver.ui.editlink
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -168,6 +170,8 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
                 }
             if (url != null) {
                 link.bitmap = ImageDownloadManager.getImage(url!!)
+            }else{
+                link.bitmap = BitmapFactory.decodeResource(resources, com.hci.starsaver.R.drawable.icon)
             }
             viewModel.addBookMark(link)
         }
@@ -182,7 +186,7 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
             1,
             binding.linkTextView.text.toString(),
             binding.reminderSwitch.isChecked,
-            binding.starSwitch.isChecked
+            binding.starSwitch.isChecked,
         )
     }
 
