@@ -95,6 +95,8 @@ class AddLinkActivity : AppCompatActivity() {
                 }
             if (url != null) {
                 link.bitmap = ImageDownloadManager.getImage(url!!)
+            }else{
+                link.bitmap = BitmapFactory.decodeResource(resources, com.hci.starsaver.R.drawable.icon)
             }
             viewModel.addBookMark(link)
             finish()
@@ -126,8 +128,7 @@ class AddLinkActivity : AppCompatActivity() {
                 1,
                 binding.linkEditText.text.toString(),
                 isRemind,
-                isStared,
-                bitmap = BitmapFactory.decodeResource(resources, com.hci.starsaver.R.drawable.icon)
+                isStared
             )
 
             // 앱 외부에서 링크 추가할 때
