@@ -54,10 +54,10 @@
         tools:text="home" />
 
     <TextView
-        android:layout_marginTop="12dp"
         android:id="@+id/sizeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="@id/titleTextView"
         app:layout_constraintTop_toBottomOf="@id/titleTextView"
@@ -91,7 +91,7 @@
             android:layout_width="24dp"
             android:layout_height="16dp"
             android:layout_marginTop="22dp"
-            android:background="@null"
+            android:background="@drawable/ripple_unbounded"
             android:button="@drawable/ic_sort"
             android:textOff="@null"
             android:textOn="@null"
@@ -119,17 +119,24 @@
 
         <ImageView
             android:id="@+id/searchImageView"
-            android:layout_width="36dp"
+            android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_marginTop="18dp"
+            android:background="@drawable/ripple_unbounded"
+            android:clickable="true"
+            android:focusable="true"
             android:src="@drawable/ic_search" />
 
         <ImageView
             android:id="@+id/optionImageView"
-            android:layout_width="5dp"
+            android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginHorizontal="27dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="27dp"
+            android:background="@drawable/ripple_unbounded"
+            android:clickable="true"
+            android:focusable="true"
             android:src="@drawable/ic_menubar_button" />
     </LinearLayout>
 
