@@ -1,13 +1,11 @@
 package com.hci.starsaver.ui.home
 
 import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hci.starsaver.*
+import com.hci.starsaver.R
 import com.hci.starsaver.data.bookMark.BookMark
 import com.hci.starsaver.databinding.FragmentHomeBinding
 import com.hci.starsaver.ui.addfolder.AddFolderActivity
@@ -224,7 +222,6 @@ class HomeFragment : Fragment() {
         binding.folderRecyclerView.adapter = folderAdapter
 
         folderAdapter.setOnFolderClickedListener {
-            Log.d("t", "${it.id}, ${it.parentId}")
             viewModel.moveFolder(it)
             reloadList()
         }
@@ -270,20 +267,5 @@ class HomeFragment : Fragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-    }
-
-    private fun animateHeightTo(view: View, height: Int) {
-        val anim = ValueAnimator.ofInt(view.height, height)
-        anim.setDuration(300)
-            .addUpdateListener {
-                val value = it.animatedValue
-                view.layoutParams.height = value as Int
-                view.requestLayout()
-            }
-        anim.start()
-    }
-
-    private fun animateHeightPosition(view: View, height: Float) {
-        ObjectAnimator.ofFloat(view, "translationY", height).apply { start() }
     }
 }
