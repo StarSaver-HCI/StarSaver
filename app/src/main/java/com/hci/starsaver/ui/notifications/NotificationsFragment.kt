@@ -3,7 +3,6 @@ package com.hci.starsaver.ui.notifications
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -148,7 +147,6 @@ class NotificationsFragment : Fragment() {
                 binding.isAllFolderSwitchButton.visibility = View.VISIBLE
             }
             if (expanded) {
-                Log.d("size", tempSet.size.toString())
                 for (folder in tempSet) {
                     viewModel.addBookMark(folder)
                     if (folder.id == 0L) {
