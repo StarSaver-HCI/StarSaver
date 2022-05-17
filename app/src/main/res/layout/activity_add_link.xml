@@ -109,7 +109,7 @@
                 android:background="@null"
                 android:hint="@string/linkText"
                 android:imeOptions="actionDone"
-                android:inputType="textPersonName" />
+                android:inputType="textUri" />
 
         </LinearLayout>
 
