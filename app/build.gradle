@@ -74,4 +74,7 @@ dependencies {
 
     // icon
     implementation("net.mm2d.touchicon:touchicon:0.9.3")
+
+    //material
+    implementation 'com.google.android.material:material:1.6.0'
 }
