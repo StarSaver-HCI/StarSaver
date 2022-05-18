@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="100dp"
-    android:layout_height="100dp">
+    android:layout_height="100dp"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
         android:id="@+id/folderImageView"
@@ -11,20 +12,8 @@
         android:src="@drawable/ic_home_folder"
         app:layout_constraintBottom_toTopOf="@id/titleTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="18dp"
-        android:layout_height="38dp"
-        android:button="@drawable/checkbox_selector"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/folderImageView"
-        app:layout_constraintEnd_toEndOf="@id/folderImageView"
-        app:layout_constraintStart_toStartOf="@id/folderImageView"
-        app:layout_constraintTop_toTopOf="@id/folderImageView" />
 
     <TextView
         android:id="@+id/titleTextView"
@@ -32,6 +21,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="#242424"
+        tools:text="test"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
