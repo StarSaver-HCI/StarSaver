@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.hci.starsaver.MainActivity
 import com.hci.starsaver.R
 import com.hci.starsaver.databinding.ActivityLoginBinding
 
@@ -58,10 +59,10 @@ class LoginActivity:AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val intent = Intent(this, LoadingActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY )
                     startActivity(intent)
                     handleSuccessLogin()
                 } else {
-                    // If sign in fails, display a message to the user.
                     Toast.makeText(baseContext, "로그인 실패",
                         Toast.LENGTH_SHORT).show()
                 }
@@ -85,26 +86,21 @@ class LoginActivity:AppCompatActivity() {
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
-                // Google Sign In was successful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account!!)
 
             } catch (e: ApiException) {
-                // Google Sign In failed, update UI appropriately
                 Log.w("LoginActivity", "Google sign in failed", e)
             }
         }
-    } // onActivityResult End
+    }
 
-    // firebaseAuthWithGoogle
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
         Log.d("LoginActivity", "firebaseAuthWithGoogle:" + acct.id!!)
 
-        //Google SignInAccount 객체에서 ID 토큰을 가져와서 Firebase Auth로 교환하고 Firebase에 인증
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->

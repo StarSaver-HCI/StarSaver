@@ -61,13 +61,7 @@ class HomeViewModel(applications: Application): AndroidViewModel(applications) {
         currentBookMark.postValue(bmStack.value!!.peek())
     }
 
-    fun getPath():String{
-        var str=""
-        bmStack.value!!.forEachIndexed{ idx,bm->
-            str+= bm.title
-            if(idx!=bmStack.value!!.lastIndex)str+=" > "
-        }
-        return str
+    fun getPathList():List<String>?{
+        return bmStack.value?.toList()?.map{it.title}
     }
-
 }

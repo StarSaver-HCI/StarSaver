@@ -14,31 +14,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="#00000000"
-        android:src="@drawable/ic_baseline_arrow_back_ios_new_24_white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+<!--
     <TextView
         android:id="@+id/pathTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="24dp"
         android:ellipsize="end"
         android:maxLines="2"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/backButton"
-        app:layout_constraintStart_toEndOf="@id/backButton"
-        app:layout_constraintTop_toTopOf="@id/backButton"
-        tools:layout_editor_absoluteX="110dp"
-        tools:text="home" />
+        app:layout_constraintBottom_toBottomOf="@id/searchLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/searchLayout"
+        tools:text="home" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pathRecyclerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/searchLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/searchLayout" />
 
     <TextView
         android:id="@+id/titleTextView"
@@ -112,16 +110,18 @@
         android:id="@+id/searchLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@id/sortLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/sortLayout">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteY="12dp">
 
         <ImageView
             android:id="@+id/searchImageView"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/ripple_unbounded"
             android:clickable="true"
             android:focusable="true"
@@ -131,9 +131,7 @@
             android:id="@+id/optionImageView"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="27dp"
+            android:layout_gravity="center_vertical"
             android:background="@drawable/ripple_unbounded"
             android:clickable="true"
             android:focusable="true"

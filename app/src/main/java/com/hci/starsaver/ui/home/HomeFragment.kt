@@ -2,17 +2,20 @@ package com.hci.starsaver.ui.home
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.animation.AlphaAnimation
 import android.webkit.URLUtil
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -20,6 +23,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hci.starsaver.R
 import com.hci.starsaver.data.bookMark.BookMark
+import com.hci.starsaver.databinding.DalogRemoveBinding
 import com.hci.starsaver.databinding.FragmentHomeBinding
 import com.hci.starsaver.ui.addfolder.AddFolderActivity
 import com.hci.starsaver.ui.addlink.AddLinkActivity
@@ -27,6 +31,7 @@ import com.hci.starsaver.ui.editfolder.EditFolderActivity
 import com.hci.starsaver.ui.editlink.EditLinkActivity
 import com.hci.starsaver.util.FolderAdapter
 import com.hci.starsaver.util.LinkAdapter
+import com.hci.starsaver.util.PathAdapter
 
 
 class HomeFragment : Fragment() {
@@ -37,11 +42,14 @@ class HomeFragment : Fragment() {
         lateinit var viewModel: HomeViewModel
     }
 
+    private lateinit var list:MutableList<BookMark>
     private lateinit var callback: OnBackPressedCallback
     private val folderAdapter = FolderAdapter()
     private val linkAdapter = LinkAdapter()
+    private val pathAdapter = PathAdapter()
     private var isFabOpen = false
     private var isRoot = true
+    private var popUpObject: PopupMenu.OnMenuItemClickListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,11 +62,14 @@ class HomeFragment : Fragment() {
         initViewModel()
         initButtons()
         initLayout()
+        initPathLayout()
+
         return binding.root
     }
 
     @SuppressLint("ResourceType", "SetTextI18n")
     private fun initViewModel() {
+        list = mutableListOf()
         viewModel.readAllData.observe(viewLifecycleOwner) { it ->
             viewModel.getStarCount()
             if (viewModel.sortByName.value!!) {
@@ -66,6 +77,7 @@ class HomeFragment : Fragment() {
                 val linkList = ArrayDeque<BookMark>()
                 val starLinkList = ArrayDeque<BookMark>()
                 it.forEach {
+                    list.add(it)
                     if (it.parentId == viewModel.currentBookMark.value!!.id && it.isLink == 0) {
                         folderList.addLast(it)
                     } else if (it.parentId == viewModel.currentBookMark.value!!.id && it.isLink == 1) {
@@ -121,23 +133,22 @@ class HomeFragment : Fragment() {
         }
     }
 
-    @SuppressLint("ResourceAsColor")
+    @SuppressLint("ResourceAsColor", "NotifyDataSetChanged")
     private fun updateUI(it: BookMark) {
         if (it.id != 0L && it.isLink == 0) {
             isRoot = false
             binding.topView.setBackgroundResource(R.drawable.topview_image2)
-            binding.pathTextView.visibility = View.VISIBLE
-            binding.backButton.visibility = View.VISIBLE
             binding.sizeTextView.visibility = View.VISIBLE
             binding.titleTextView.text = it.title
-            binding.pathTextView.text = viewModel.getPath()
+            pathAdapter.submitList(viewModel.getPathList())
+            binding.pathRecyclerView.visibility = View.VISIBLE
         } else {
             isRoot = true // 루트
             binding.topView.setBackgroundResource(R.drawable.topview_image)
             binding.sizeTextView.visibility = View.GONE
-            binding.pathTextView.visibility = View.GONE
-            binding.backButton.visibility = View.GONE
+            binding.pathRecyclerView.visibility = View.GONE
         }
+
     }
 
     private fun initButtons() {
@@ -146,16 +157,14 @@ class HomeFragment : Fragment() {
         }
 
         binding.addLinkButton.setOnClickListener {
+            toggleFab()
             addLink()
+
         }
 
         binding.addFolderButton.setOnClickListener {
+            toggleFab()
             addFolder()
-        }
-
-        binding.backButton.setOnClickListener {
-            viewModel.popFolder()
-            reloadList()
         }
 
         binding.sortTypeSwitchButton.setOnCheckedChangeListener { _, isChecked ->
@@ -167,9 +176,10 @@ class HomeFragment : Fragment() {
         }
 
         binding.optionImageView.setOnClickListener {
-            val intent = Intent(this.context, EditFolderActivity::class.java)
-            intent.putExtra("BookMark", viewModel.currentBookMark.value)
-            startActivity(intent)
+//            val intent = Intent(this.context, EditFolderActivity::class.java)
+//            intent.putExtra("BookMark", viewModel.currentBookMark.value)
+//            startActivity(intent)
+            showPopup(it)
         }
     }
 
@@ -252,6 +262,95 @@ class HomeFragment : Fragment() {
                 return false
             }
         }
+    }
+
+    private fun initPathLayout(){
+        pathAdapter.setOnClickedListener {
+            for(i in 0 until it) {
+                viewModel.popFolder()
+                reloadList()
+            }
+        }
+        binding.pathRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
+        binding.pathRecyclerView.adapter = pathAdapter
+
+        popUpObject = PopupMenu.OnMenuItemClickListener { item ->
+            when (item?.itemId) {
+                R.id.folderRemoveButton -> {
+                    showDialog()
+                }
+                R.id.folderEditButton -> {
+                    val intent = Intent(this.context, EditFolderActivity::class.java)
+                    intent.putExtra("BookMark", viewModel.currentBookMark.value)
+                    startActivity(intent)
+                }
+                R.id.folderShareButton -> {
+                    sendToExternal(viewModel.currentBookMark.value!!)
+                }
+            }
+            item != null
+        }
+    }
+
+    // 메뉴 보여주는 함수
+    private fun showPopup(v: View) {
+        val popup = PopupMenu(requireContext(), v)
+        popup.setOnMenuItemClickListener(popUpObject)
+        popup.menuInflater.inflate(
+            if (viewModel.currentBookMark.value!!.id == 0L) R.menu.home_folder_menu else R.menu.folder_menu,
+            popup.menu
+        )
+        popup.show()
+    }
+
+    // 삭제 다이얼로그
+    private fun showDialog() {
+        var addLinkDialog = Dialog(requireContext())
+        var dialogView = DalogRemoveBinding.inflate(layoutInflater)
+        dialogView.cancelButton.setOnClickListener {
+            addLinkDialog.dismiss()
+        }
+        dialogView.removeButton.setOnClickListener {
+            viewModel.deleteBookMark(viewModel.currentBookMark.value!!)
+            viewModel.popFolder()
+            reloadList()
+            addLinkDialog.dismiss()
+        }
+        addLinkDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        addLinkDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        addLinkDialog.setContentView(dialogView.root)
+        addLinkDialog.show()
+    }
+
+    // 외부로 공유하기
+    private fun sendToExternal(bm:BookMark) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            val text = makeTree("Shared by StarSaver\n\n" + bm.title + "[folder]", bm.id!!, 0)
+            putExtra(Intent.EXTRA_TEXT, text)
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
+    }
+
+    // 트리를 만드는 함수
+    private fun makeTree(tmp: String, id: Long, depth: Int): String {
+        var str = tmp
+        for (b in list) {
+            if (b.parentId == id) {
+                str += "\n|"
+                for (i in 0..depth) {
+                    str += "___"
+                }
+                str = makeTree(str + getLink(b), b.id!!, depth + 1)
+            }
+        }
+        return str
+    }
+
+    private fun getLink(b: BookMark): String {
+        return if (b.isLink == 1) "${b.title} : ${b.link}" else "${b.title}[folder]"
     }
 
     override fun onAttach(context: Context) {

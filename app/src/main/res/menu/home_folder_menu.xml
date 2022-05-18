@@ -4,6 +4,4 @@
         android:title="편집하기"/>
     <item android:id="@+id/folderShareButton"
         android:title="@string/shareString"/>
-    <item android:id="@+id/folderRemoveButton"
-        android:title="삭제하기"/>
 </menu>

@@ -1,11 +1,15 @@
 package com.hci.starsaver.ui.editfolder
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
 import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -13,10 +17,12 @@ import com.hci.starsaver.R
 import com.hci.starsaver.config.BookMarkApplication
 import com.hci.starsaver.data.bookMark.BookMark
 import com.hci.starsaver.databinding.ActivityEditFolderBinding
+import com.hci.starsaver.databinding.DalogRemoveBinding
+import com.hci.starsaver.databinding.DialogNotificationBinding
 import com.hci.starsaver.ui.home.HomeFragment
 import com.hci.starsaver.ui.home.HomeViewModel
 
-class EditFolderActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
+class EditFolderActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityEditFolderBinding
     private lateinit var viewModel: HomeViewModel
@@ -40,7 +46,6 @@ class EditFolderActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         isEditing = false
         binding.apply {
             topBarTextView.visibility = View.INVISIBLE
-            shareOrRemoveButton.visibility = View.VISIBLE
             cancelButton.visibility = View.INVISIBLE
             saveButton.visibility = View.INVISIBLE
             titleTextView.setOnClickListener { initEdit() }
@@ -57,7 +62,6 @@ class EditFolderActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         isEditing = true
         binding.apply {
             topBarTextView.visibility = View.VISIBLE
-            shareOrRemoveButton.visibility = View.INVISIBLE
             cancelButton.visibility = View.VISIBLE
             saveButton.visibility = View.VISIBLE
             cancelButton.setOnClickListener {
@@ -95,22 +99,8 @@ class EditFolderActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         binding.backButton.setOnClickListener {
             finish()
         }
-
-        binding.shareOrRemoveButton.setOnClickListener {
-            showPopup(it)
-        }
     }
 
-    private fun showPopup(v: View) {
-        val popup = PopupMenu(this, v) // PopupMenu 객체 선언
-        popup.setOnMenuItemClickListener(this)
-        popup.menuInflater.inflate(
-            if (bm.id == 0L) R.menu.folder_menu else R.menu.link_menu,
-            popup.menu
-        )
-        // 팝업 보여주기
-        popup.show()
-    }
 
     private fun getEditedBookMark(): BookMark {
         return BookMark(
@@ -139,7 +129,6 @@ class EditFolderActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
 
     private fun makeTree(tmp: String, id: Long, depth: Int): String {
         var str = tmp
-
         for (b in list) {
             if (b.parentId == id) {
                 str += "\n|"
@@ -149,7 +138,6 @@ class EditFolderActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
                 str = makeTree(str + getLink(b), b.id!!, depth + 1)
             }
         }
-
         return str
     }
 
@@ -157,39 +145,37 @@ class EditFolderActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         return if (b.isLink == 1) "${b.title} : ${b.link}" else "${b.title}[folder]"
     }
 
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.linkRemoveButton -> {
-                showDialog()
-                if (isRemoved) finish()
-            }
-            R.id.linkShareButton -> {
-                viewModel.addBookMark(getEditedBookMark())
-                sendToExternal()
-            }
-            R.id.folderShareButton -> {
-                viewModel.addBookMark(getEditedBookMark())
-                sendToExternal()
-            }
-        }
-        return item != null
-    }
-
     private fun showDialog() {
-        val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.setMessage("별들이 사라지려 합니다.")
-            .setCancelable(false)
-            .setPositiveButton("삭제") { _, _ ->
-                isRemoved = true
-                viewModel.deleteBookMark(bm)
-                finish()
-            }
-            .setNegativeButton("취소") { dialog, _ ->
-                dialog.cancel()
-            }
-        val alert = dialogBuilder.create()
-        alert.setTitle("정말 삭제 하시겠습니까?")
-        alert.show()
+//        val dialogBuilder = AlertDialog.Builder(this)
+//        dialogBuilder.setMessage("별들이 사라지려 합니다.")
+//            .setCancelable(false)
+//            .setPositiveButton("삭제") { _, _ ->
+//                isRemoved = true
+//                viewModel.deleteBookMark(bm)
+//                finish()
+//            }
+//            .setNegativeButton("취소") { dialog, _ ->
+//                dialog.cancel()
+//            }
+//        val alert = dialogBuilder.create()
+//        alert.setTitle("정말 삭제 하시겠습니까?")
+//        alert.show()
+
+
+        var addLinkDialog = Dialog(this)
+        var dialogView = DalogRemoveBinding.inflate(layoutInflater)
+        dialogView.cancelButton.setOnClickListener {
+            isRemoved = true
+            viewModel.deleteBookMark(bm)
+            finish()
+        }
+        dialogView.removeButton.setOnClickListener {
+            addLinkDialog.dismiss()
+        }
+        addLinkDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        addLinkDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        addLinkDialog.setContentView(dialogView.root)
+        addLinkDialog.show()
     }
 
     private val watcher = object : TextWatcher {

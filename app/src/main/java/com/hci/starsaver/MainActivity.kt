@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         if(auth.currentUser==null){
             startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }else{
             startActivity(Intent(this, BottomNavigationActivity::class.java))
             finish()
