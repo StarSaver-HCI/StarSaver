@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -51,18 +52,56 @@
             android:background="#F0F0F0"
             android:orientation="vertical">
 
-            <android.widget.Button
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/emailButton"
-                android:textAllCaps="false"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginTop="2dp"
                 android:background="@drawable/button_setting_background"
-                android:paddingStart="28dp"
-                android:stateListAnimator="@null"
-                android:text="이메일 연동하기"
-                android:textAlignment="textStart"
-                android:textColor="#020202" />
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginStart="28dp"
+                    android:textColor="@color/black"
+                    android:id="@+id/emailConnectedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/googleImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/logo_googleg_48dp"
+                    android:visibility="gone"
+                    android:layout_marginEnd="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/emailTextView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/emailTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="28dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/notiImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="28dp"
+                    android:src="@drawable/notivector"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <android.widget.Button
                 android:id="@+id/backUpButton"
@@ -70,8 +109,8 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="2dp"
                 android:background="@drawable/button_setting_background"
-                android:stateListAnimator="@null"
                 android:paddingStart="28dp"
+                android:stateListAnimator="@null"
                 android:text="백업하기"
                 android:textAlignment="textStart"
                 android:textColor="#020202" />
@@ -82,8 +121,8 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="2dp"
                 android:background="@drawable/button_setting_background"
-                android:stateListAnimator="@null"
                 android:paddingStart="28dp"
+                android:stateListAnimator="@null"
                 android:text="데이터 불러오기"
                 android:textAlignment="textStart"
                 android:textColor="#020202" />
@@ -94,8 +133,8 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_setting_background"
-                android:stateListAnimator="@null"
                 android:paddingStart="28dp"
+                android:stateListAnimator="@null"
                 android:text="버전"
                 android:textAlignment="textStart"
                 android:textColor="#020202" />
@@ -106,8 +145,8 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="2dp"
                 android:background="@drawable/button_setting_background"
-                android:stateListAnimator="@null"
                 android:paddingStart="28dp"
+                android:stateListAnimator="@null"
                 android:text="이용약관"
                 android:textAlignment="textStart"
                 android:textColor="#020202" />
@@ -118,8 +157,8 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="2dp"
                 android:background="@drawable/button_setting_background"
-                android:stateListAnimator="@null"
                 android:paddingStart="28dp"
+                android:stateListAnimator="@null"
                 android:text="개인정보처리방침"
                 android:textAlignment="textStart"
                 android:textColor="#020202" />
@@ -130,8 +169,8 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="2dp"
                 android:background="@drawable/button_setting_background"
-                android:stateListAnimator="@null"
                 android:paddingStart="28dp"
+                android:stateListAnimator="@null"
                 android:text="문의하기"
                 android:textAlignment="textStart"
                 android:textColor="#020202" />
@@ -142,8 +181,8 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_setting_background"
-                android:stateListAnimator="@null"
                 android:paddingStart="28dp"
+                android:stateListAnimator="@null"
                 android:text="계정 삭제"
                 android:textAlignment="textStart"
                 android:textColor="#EF5252" />
@@ -163,8 +202,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/button_setting_background"
-                    android:stateListAnimator="@null"
                     android:paddingStart="28dp"
+                    android:stateListAnimator="@null"
                     android:text="로그아웃"
                     android:textAlignment="textStart"
                     android:textColor="#020202" />
