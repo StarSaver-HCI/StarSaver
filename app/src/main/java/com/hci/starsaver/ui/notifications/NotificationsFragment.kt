@@ -28,11 +28,11 @@ import com.hci.starsaver.ui.editlink.EditLinkActivity
 import com.hci.starsaver.ui.home.HomeFragment
 import com.hci.starsaver.ui.home.HomeViewModel
 import com.hci.starsaver.util.RemindFolderAdapter
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 
 class NotificationsFragment : Fragment() {
-
     private lateinit var binding: FragmentNotificationsBinding
     private lateinit var viewModel: HomeViewModel
     private lateinit var adapter: RemindFolderAdapter
@@ -46,10 +46,8 @@ class NotificationsFragment : Fragment() {
     private var minute = 0
     private var amOrPm = 0
     private lateinit var tempSet: MutableSet<BookMark>
-
     private lateinit var bookmarkList:MutableList<BookMark>
     private lateinit var notificationSet:MutableSet<BookMark>
-
     private val channelID = "testChannel"
     private var notificationManager: NotificationManager? = null
 
@@ -68,8 +66,6 @@ class NotificationsFragment : Fragment() {
         backButton()
         initLayout()
         initButtons()
-        //updateRecyclerView()
-
         return binding.root
     }
 
@@ -171,10 +167,18 @@ class NotificationsFragment : Fragment() {
                 binding.testButtonLayout.visibility = View.VISIBLE
             }
             if (expanded) {
+                var map = HashMap<Long?,Boolean>()
                 for (folder in tempSet) {
+                    map[folder.id] = folder.isRemind
                     viewModel.addBookMark(folder)
                     if (folder.id == 0L) {
                         BookMarkApplication.prefs.homeIsRemind = folder.isRemind
+                    }
+                }
+                GlobalScope.launch {
+                    viewModel.readAllData.value!!.forEach {
+                        if(map[it.parentId]!= null) it.isRemind = map[it.parentId]!!
+                        viewModel.addBookMark(it)
                     }
                 }
                 expanded = false
@@ -198,7 +202,6 @@ class NotificationsFragment : Fragment() {
                 id++
             }
             id = 0
-
             notificationSet.clear()
         }
     }
@@ -251,6 +254,7 @@ class NotificationsFragment : Fragment() {
                 binding.testButtonLayout.visibility = View.GONE
             }
         }
+
         binding.timeTextView.setOnClickListener {
             if (timePicking) {
                 timePicking = false
@@ -327,13 +331,11 @@ class NotificationsFragment : Fragment() {
                     "${newVal}번     " +
                     "${gae}개"
         }
-
         binding.gaeNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
             gae = newVal
             binding.countTextView.text = "${week}주     " +
                     "${bun}번     " +
                     "${newVal}개"
-
         }
     }
 
@@ -343,8 +345,6 @@ class NotificationsFragment : Fragment() {
         binding.timeTextView.text = "${BookMarkApplication.prefs.amOrPm}    " +
                 "${String.format("%02d", BookMarkApplication.prefs.hour!!)}시    " +
                 "${String.format("%02d", BookMarkApplication.prefs.minute!!)}분"
-
-
         binding.hourNumberPicker.minValue = 1
         binding.minuteNumberPicker.minValue = 0
         binding.amOrPmNumberPicker.minValue = 0
@@ -363,7 +363,6 @@ class NotificationsFragment : Fragment() {
         hour = binding.hourNumberPicker.value
         minute = binding.minuteNumberPicker.value
         amOrPm = binding.amOrPmNumberPicker.value
-
 
         binding.hourNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
             hour = newVal
@@ -401,10 +400,9 @@ class NotificationsFragment : Fragment() {
             }    " +
                     "${String.format("%02d", hour)}시    " +
                     "${String.format("%02d", minute)}분"
-
         }
     }
-
+    
     private fun showList() {
         lifecycleScope.launch {
             val list = viewModel.readAllData.value
@@ -412,9 +410,7 @@ class NotificationsFragment : Fragment() {
                 list!!.filter {
                     (expanded && it.title.isNotBlank() && it.isLink == 0)
                             || (it.isLink == 0 && it.isRemind)
-                },
-                expanded
-            )
+                }, expanded )
         }
     }
 
