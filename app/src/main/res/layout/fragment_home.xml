@@ -14,19 +14,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-<!--
-    <TextView
-        android:id="@+id/pathTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/searchLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/searchLayout"
-        tools:text="home" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pathRecyclerView"
