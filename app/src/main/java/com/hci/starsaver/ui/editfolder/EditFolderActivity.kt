@@ -13,6 +13,7 @@ import android.view.Window
 import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.hci.starsaver.R
 import com.hci.starsaver.config.BookMarkApplication
 import com.hci.starsaver.data.bookMark.BookMark
@@ -21,6 +22,8 @@ import com.hci.starsaver.databinding.DalogRemoveBinding
 import com.hci.starsaver.databinding.DialogNotificationBinding
 import com.hci.starsaver.ui.home.HomeFragment
 import com.hci.starsaver.ui.home.HomeViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class EditFolderActivity : AppCompatActivity(){
 
@@ -79,7 +82,14 @@ class EditFolderActivity : AppCompatActivity(){
                 }
                 viewModel.currentBookMark.value = b
                 viewModel.addBookMark(b)
-
+                GlobalScope.launch {
+                    viewModel.readAllData.value!!.forEach {
+                        if(it.parentId == bm.id){
+                            it.isRemind = b.isRemind
+                            viewModel.addBookMark(it)
+                        }
+                    }
+                }
                 initBeforeEdit()
             }
         }
