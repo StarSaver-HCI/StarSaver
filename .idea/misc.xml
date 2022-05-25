@@ -44,7 +44,10 @@
         <entry key="..\:/Juyonghan/Andriod/AndriodStudioProjects/StarSaver/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3776041666666667" />
         <entry key="..\:/Juyonghan/Andriod/AndriodStudioProjects/StarSaver/app/src/main/res/menu/folder_menu.xml" value="0.18333333333333332" />
         <entry key="..\:/Juyonghan/Andriod/AndriodStudioProjects/StarSaver/app/src/main/res/menu/link_menu.xml" value="0.18333333333333332" />
+        <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable-v24/navigation_button_color.xml" value="0.3135" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/background_loading.xml" value="0.3135" />
+        <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/background_remove_dialog.xml" value="0.25" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/bottom_popup_shape.xml" value="0.2" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/button_cancel.xml" value="0.3615" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/button_ok.xml" value="0.3615" />
@@ -85,6 +88,7 @@
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/ic_fab_folder.xml" value="0.3135" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/ic_fab_link.xml" value="0.1685" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/ic_home_folder.xml" value="0.3135" />
+        <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/ic_icon.xml" value="0.247" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3135" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/ic_link.xml" value="0.3135" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/ic_menubar_button.xml" value="0.3135" />
@@ -93,6 +97,8 @@
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/ic_settings.xml" value="0.1685" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/link_item_shape.xml" value="0.3135" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/navigation_bar.xml" value="0.3135" />
+        <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/ripple_drawable_cancel.xml" value="0.3135" />
+        <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/ripple_drawable_menubar.xml" value="0.3135" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/sort_selector.xml" value="0.1685" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/spinner_selector.xml" value="0.3135" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/switch_thumb.xml" value="0.3135" />
@@ -100,7 +106,7 @@
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/switch_track_on.xml" value="0.3135" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/switch_track_selector.xml" value="0.3135" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/topview_image.xml" value="0.3135" />
-        <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/activity_add_folder.xml" value="0.33" />
+        <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/activity_add_folder.xml" value="0.3166023166023166" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/activity_add_link.xml" value="0.33" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/activity_bottom_navigation.xml" value="0.327445652173913" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/activity_edit_folder.xml" value="0.327445652173913" />
@@ -109,6 +115,7 @@
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/activity_main.xml" value="0.327445652173913" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/dialog_add_link.xml" value="0.327445652173913" />
+        <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/dialog_remove_bookmark.xml" value="0.33" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/fragment_home.xml" value="0.4293193717277487" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/fragment_notifications.xml" value="0.2827586206896552" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/fragment_search.xml" value="0.327445652173913" />

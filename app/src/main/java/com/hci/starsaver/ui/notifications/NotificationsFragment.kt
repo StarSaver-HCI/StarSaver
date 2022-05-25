@@ -1,6 +1,12 @@
 package com.hci.starsaver.ui.notifications
 
 import android.annotation.SuppressLint
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -16,10 +24,12 @@ import com.hci.starsaver.R
 import com.hci.starsaver.config.BookMarkApplication
 import com.hci.starsaver.data.bookMark.BookMark
 import com.hci.starsaver.databinding.FragmentNotificationsBinding
+import com.hci.starsaver.ui.editlink.EditLinkActivity
 import com.hci.starsaver.ui.home.HomeFragment
 import com.hci.starsaver.ui.home.HomeViewModel
 import com.hci.starsaver.util.RemindFolderAdapter
 import kotlinx.coroutines.launch
+import java.util.*
 
 class NotificationsFragment : Fragment() {
 
@@ -37,6 +47,12 @@ class NotificationsFragment : Fragment() {
     private var amOrPm = 0
     private lateinit var tempSet: MutableSet<BookMark>
 
+    private lateinit var bookmarkList:MutableList<BookMark>
+    private lateinit var notificationSet:MutableSet<BookMark>
+
+    private val channelID = "testChannel"
+    private var notificationManager: NotificationManager? = null
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +63,8 @@ class NotificationsFragment : Fragment() {
         viewModel = HomeFragment.viewModel
 
         tempSet = mutableSetOf()
+        bookmarkList = mutableListOf()
+        notificationSet = mutableSetOf()
         backButton()
         initLayout()
         initButtons()
@@ -69,6 +87,7 @@ class NotificationsFragment : Fragment() {
             binding.buttonLayout.visibility = View.VISIBLE
             binding.saveButton.isClickable = true
             binding.cancelButton.isClickable = true
+            binding.testButtonLayout.visibility = View.GONE
             showList()
         }
 
@@ -87,6 +106,7 @@ class NotificationsFragment : Fragment() {
                 binding.saveButton.isClickable = false
                 binding.cancelButton.isClickable = false
                 binding.isAllFolderSwitchButton.visibility = View.VISIBLE
+                binding.testButtonLayout.visibility = View.VISIBLE
             }
             if (timePicking) {
                 binding.timeTextView.text = "${BookMarkApplication.prefs.amOrPm}    " +
@@ -106,6 +126,7 @@ class NotificationsFragment : Fragment() {
                 binding.saveButton.isClickable = false
                 binding.cancelButton.isClickable = false
                 binding.isAllFolderSwitchButton.visibility = View.VISIBLE
+                binding.testButtonLayout.visibility = View.VISIBLE
             }
             if (expanded) {
                 expanded = false
@@ -113,6 +134,7 @@ class NotificationsFragment : Fragment() {
                 binding.buttonLayout.visibility = View.GONE
                 binding.saveButton.isClickable = false
                 binding.cancelButton.isClickable = false
+                binding.testButtonLayout.visibility = View.VISIBLE
                 showList()
             }
         }
@@ -129,6 +151,7 @@ class NotificationsFragment : Fragment() {
                 binding.saveButton.isClickable = false
                 binding.cancelButton.isClickable = false
                 binding.isAllFolderSwitchButton.visibility = View.VISIBLE
+                binding.testButtonLayout.visibility = View.VISIBLE
             }
             if (timePicking) {
                 BookMarkApplication.prefs.hour = hour
@@ -145,6 +168,7 @@ class NotificationsFragment : Fragment() {
                 binding.saveButton.isClickable = false
                 binding.cancelButton.isClickable = false
                 binding.isAllFolderSwitchButton.visibility = View.VISIBLE
+                binding.testButtonLayout.visibility = View.VISIBLE
             }
             if (expanded) {
                 for (folder in tempSet) {
@@ -158,8 +182,24 @@ class NotificationsFragment : Fragment() {
                 binding.buttonLayout.visibility = View.GONE
                 binding.saveButton.isClickable = false
                 binding.cancelButton.isClickable = false
+                binding.testButtonLayout.visibility = View.VISIBLE
                 showList()
             }
+        }
+
+        binding.testButton.setOnClickListener {
+            randomSelection()
+            notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            createChannel(channelID, "TestChannel", "this is a test")
+
+            var id = 1
+            for (bm in notificationSet){
+                createNotification(bm, id)
+                id++
+            }
+            id = 0
+
+            notificationSet.clear()
         }
     }
 
@@ -194,6 +234,7 @@ class NotificationsFragment : Fragment() {
                 binding.buttonLayout.visibility = View.GONE
                 binding.saveButton.isClickable = false
                 binding.cancelButton.isClickable = false
+                binding.testButtonLayout.visibility = View.VISIBLE
             } else {
                 numberPicking = true
                 timePicking = false
@@ -207,6 +248,7 @@ class NotificationsFragment : Fragment() {
                 binding.weekNumberPicker.value = BookMarkApplication.prefs.week!!
                 binding.bunNumberPicker.value = BookMarkApplication.prefs.notificationBun!!
                 binding.gaeNumberPicker.value = BookMarkApplication.prefs.notificationGae!!
+                binding.testButtonLayout.visibility = View.GONE
             }
         }
         binding.timeTextView.setOnClickListener {
@@ -227,6 +269,7 @@ class NotificationsFragment : Fragment() {
                 binding.buttonLayout.visibility = View.GONE
                 binding.saveButton.isClickable = false
                 binding.cancelButton.isClickable = false
+                binding.testButtonLayout.visibility = View.VISIBLE
             } else {
                 timePicking = true
                 numberPicking = false
@@ -239,6 +282,7 @@ class NotificationsFragment : Fragment() {
                 binding.cancelButton.isClickable = true
                 binding.hourNumberPicker.value = BookMarkApplication.prefs.hour!!
                 binding.minuteNumberPicker.value = BookMarkApplication.prefs.minute!!
+                binding.testButtonLayout.visibility = View.GONE
                 if (BookMarkApplication.prefs.amOrPm!! == "오전") {
                     binding.amOrPmNumberPicker.value = 0
                 } else {
@@ -372,5 +416,65 @@ class NotificationsFragment : Fragment() {
                 expanded
             )
         }
+    }
+
+    private fun randomSelection() {
+        val random = Random()
+        HomeFragment.viewModel.readAllData.observe(viewLifecycleOwner) { it ->
+            HomeFragment.viewModel.getStarCount()
+            it.forEach {
+                if(it.isRemind && it.isLink == 1){
+                    bookmarkList.add(it)
+                }
+            }
+        }
+
+        var sizeOfSet : Int = if(BookMarkApplication.prefs.notificationGae!! > bookmarkList.size){
+            bookmarkList.size
+        } else {
+            BookMarkApplication.prefs.notificationGae!!
+        }
+
+        while (sizeOfSet != notificationSet.size){
+            val num = random.nextInt(bookmarkList.size)
+            notificationSet.add(bookmarkList[num])
+        }
+    }
+
+    private fun createChannel(id: String, name: String, channelDescription: String) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(id, name, importance).apply {
+                description = channelDescription
+            }
+            notificationManager?.createNotificationChannel(channel)
+        }else{
+
+        }
+    }
+
+    private fun createNotification(link : BookMark, id : Int) {
+        val intent = Intent(this.context, EditLinkActivity::class.java).apply {
+
+        }
+        intent.putExtra("BookMark", link.copy(bitmap = null))
+
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(
+            this.context,
+            id,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val notification: Notification = NotificationCompat.Builder(requireContext(), channelID)
+            .setContentTitle("잊혀졌던 소중한 별을 만나보세요.")
+            .setContentText(link.title)
+            .setAutoCancel(true)
+            .setSmallIcon(com.hci.starsaver.R.drawable.icon)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .build()
+
+        notificationManager?.notify(id, notification)
     }
 }

@@ -118,7 +118,7 @@ class AddLinkActivity : AppCompatActivity() {
         selectedParentId = currentId
 
         binding.saveButton.setOnClickListener {
-            val isRemind = binding.reminderSwitch.isChecked
+//            val isRemind = binding.reminderSwitch.isChecked
             val isStared = binding.starSwitch.isChecked
             val bm = BookMark(
                 null,
@@ -127,9 +127,10 @@ class AddLinkActivity : AppCompatActivity() {
                 binding.descriptionEditText.text.toString(),
                 1,
                 binding.linkEditText.text.toString(),
-                isRemind,
+//                isRemind,
                 isStared
             )
+            binding.parentView.visibility = View.GONE
 
             // 앱 외부에서 링크 추가할 때
             if (isExternal) Toast.makeText(this, "링크를 저장했습니다.", Toast.LENGTH_SHORT).show()

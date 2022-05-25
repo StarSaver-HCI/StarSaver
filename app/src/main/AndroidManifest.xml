@@ -22,12 +22,14 @@
         <activity
             android:name=".ui.addfolder.AddFolderActivity"
             android:exported="true"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" />
         <activity android:name=".ui.editfolder.EditFolderActivity" />
         <activity android:name=".ui.editlink.EditLinkActivity" />
         <activity
             android:name=".ui.addlink.AddLinkActivity"
             android:exported="true"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />

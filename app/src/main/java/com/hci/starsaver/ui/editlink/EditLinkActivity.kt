@@ -1,22 +1,23 @@
 package com.hci.starsaver.ui.editlink
 
+import android.app.Dialog
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.PopupMenu
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.hci.starsaver.R
 import com.hci.starsaver.data.bookMark.BookMark
 import com.hci.starsaver.databinding.ActivityEditLinkBinding
+import com.hci.starsaver.databinding.DialogRemoveBookmarkBinding
 import com.hci.starsaver.ui.home.HomeViewModel
 import com.hci.starsaver.util.ImageDownloadManager
 import kotlinx.coroutines.Dispatchers
@@ -216,21 +217,47 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
     }
 
     private fun showDialog() {
-        val dialogBuilder = AlertDialog.Builder(this)
+        var removeDialog = Dialog(this)
+        var dialogView = DialogRemoveBookmarkBinding.inflate(layoutInflater)
 
-        dialogBuilder.setMessage("별 하나가 사라지려 합니다.")
-            .setCancelable(false)
-            .setPositiveButton("삭제") { dialog, id ->
-                isRemoved = true
-                viewModel.deleteBookMark(bm)
-                finish()
-            }
-            .setNegativeButton("취소") { dialog, id ->
-                dialog.cancel()
-            }
-        val alert = dialogBuilder.create()
-        alert.setTitle("정말 삭제 하시겠습니까?")
-        alert.show()
+
+        removeDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        removeDialog.setContentView(dialogView.root)
+        removeDialog.window!!.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        removeDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialogView.cancelTextView.setOnClickListener {
+            removeDialog.cancel()
+        }
+
+        dialogView.removeTextView.setOnClickListener {
+            isRemoved = true
+            viewModel.deleteBookMark(bm)
+            finish()
+        }
+
+        removeDialog.window?.setGravity(Gravity.BOTTOM)
+        removeDialog.show()
+
+
+
+
+//        val dialogBuilder = AlertDialog.Builder(this)
+//
+//        dialogBuilder.setMessage("별 하나가 사라지려 합니다.")
+//            .setCancelable(false)
+//            .setPositiveButton("삭제") { dialog, id ->
+//                isRemoved = true
+//                viewModel.deleteBookMark(bm)
+//                finish()
+//            }
+//            .setNegativeButton("취소") { dialog, id ->
+//                dialog.cancel()
+//            }
+//        val alert = dialogBuilder.create()
+//        alert.setTitle("정말 삭제 하시겠습니까?")
+//        alert.window?.setGravity(Gravity.BOTTOM)
+//        alert.show()
     }
 
     private val watcher = object :TextWatcher{
