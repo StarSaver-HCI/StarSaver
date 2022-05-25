@@ -34,6 +34,7 @@ class AddLinkActivity : AppCompatActivity() {
     private var currentId = 0L
     private var selectedParentId = 0L
     private var isExternal = false
+    private var isRemind = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,7 +119,6 @@ class AddLinkActivity : AppCompatActivity() {
         selectedParentId = currentId
 
         binding.saveButton.setOnClickListener {
-//            val isRemind = binding.reminderSwitch.isChecked
             val isStared = binding.starSwitch.isChecked
             val bm = BookMark(
                 null,
@@ -127,7 +127,7 @@ class AddLinkActivity : AppCompatActivity() {
                 binding.descriptionEditText.text.toString(),
                 1,
                 binding.linkEditText.text.toString(),
-//                isRemind,
+                isRemind,
                 isStared
             )
             binding.parentView.visibility = View.GONE
@@ -221,6 +221,13 @@ class AddLinkActivity : AppCompatActivity() {
                     id: Long
                 ) {
                     selectedParentId = idList[position]
+                    GlobalScope.launch {
+                        viewModel.readAllData.value?.forEach {  b->
+                            if(b.id == selectedParentId){
+                                isRemind = b.isRemind
+                            }
+                        }
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}

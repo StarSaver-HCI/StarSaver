@@ -53,7 +53,6 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
         binding.linkTextView.setText(bm.link)
         binding.descriptionEditText.setText(bm.description)
         binding.starSwitch.isChecked = bm.isStar
-        binding.reminderSwitch.isChecked = bm.isRemind
 
 
         binding.backButton.setOnClickListener {
@@ -81,7 +80,6 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
             descriptionEditText.onFocusChangeListener = focus
             descriptionEditText.addTextChangedListener(watcher)
             starSwitch.setOnCheckedChangeListener { _, _ -> initEdit() }
-            reminderSwitch.setOnCheckedChangeListener { _, _ -> initEdit() }
         }
     }
 
@@ -141,7 +139,6 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
                 binding.linkTextView.setText(bm.link)
                 binding.descriptionEditText.setText(bm.description)
                 binding.starSwitch.isChecked = bm.isStar
-                binding.reminderSwitch.isChecked = bm.isRemind
                 currentFocus?.clearFocus()
                 initBeforeEdit()
 
@@ -186,7 +183,7 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
             binding.descriptionEditText.text.toString(),
             1,
             binding.linkTextView.text.toString(),
-            binding.reminderSwitch.isChecked,
+            bm.isRemind,
             binding.starSwitch.isChecked,
         )
     }

@@ -196,38 +196,6 @@
         android:layout_marginHorizontal="24dp"
         android:background="@color/gray_cc" />
 
-    <LinearLayout
-        android:id="@+id/reminderLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="15dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingHorizontal="24dp">
-
-        <ImageView
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:src="@drawable/ic_add_link_bell" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="14dp"
-            android:layout_weight="1"
-            android:text="@string/settingReminder"
-            android:textColor="#242424"
-            android:textSize="18sp" />
-
-        <Switch
-            android:id="@+id/reminderSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:thumbTint="#FFFFFF"
-            android:track="@drawable/switch_track_selector"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
-    </LinearLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
