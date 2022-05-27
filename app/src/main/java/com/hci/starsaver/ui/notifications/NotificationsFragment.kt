@@ -7,6 +7,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -466,7 +467,8 @@ class NotificationsFragment : Fragment() {
             .setContentTitle("잊혀졌던 소중한 별을 만나보세요.")
             .setContentText(link.title)
             .setAutoCancel(true)
-            .setSmallIcon(com.hci.starsaver.R.drawable.icon)
+            .setSmallIcon(com.hci.starsaver.R.drawable.ic_icon_noti)
+            .setColor(Color.parseColor("#012C9D"))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .build()

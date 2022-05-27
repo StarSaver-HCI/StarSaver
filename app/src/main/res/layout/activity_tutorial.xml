@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/activity_tutorial">
+
+
+
+  <androidx.viewpager.widget.ViewPager
+      android:id="@+id/view_pager"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent" />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:layout_marginBottom="475dp"
+      android:layout_alignParentBottom="true"
+      android:layout_above="@id/view_pager"
+      android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/startButton"
+        android:layout_width="180dp"
+        android:layout_height="45dp"
+        android:background="@drawable/button_start"
+        android:backgroundTint="#00FFFFFF" />
+  </LinearLayout>
+
+
+  <!--    하단 점이 들어갈 레이아웃-->
+  <!--    layout_alignParent로 아래에 위치-->
+  <LinearLayout
+      android:id="@+id/layoutDots"
+      android:layout_width="match_parent"
+      android:layout_height="30dp"
+      android:layout_alignParentTop="true"
+      android:layout_marginTop="5dp"
+      android:gravity="center"
+      android:orientation="horizontal">
+
+  </LinearLayout>
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:alpha=".5"
+      android:layout_above="@id/layoutDots"
+      android:background="@android:color/white" />
+
+
+</RelativeLayout>

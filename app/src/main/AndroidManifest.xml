@@ -16,21 +16,24 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m" >
         <activity
+            android:name=".ui.login.TutorialActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.login.LoadingActivity"
             android:exported="false" />
         <activity android:name=".ui.login.LoginActivity" />
         <activity
             android:name=".ui.addfolder.AddFolderActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.editfolder.EditFolderActivity" />
         <activity android:name=".ui.editlink.EditLinkActivity" />
         <activity
             android:name=".ui.addlink.AddLinkActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" >
+            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar"
+            android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 

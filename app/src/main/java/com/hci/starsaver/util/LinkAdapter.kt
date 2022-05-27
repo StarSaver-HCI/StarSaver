@@ -36,16 +36,16 @@ class LinkAdapter : ListAdapter<BookMark, LinkAdapter.ViewHolder>(diffUtil) {
             binding.imageView.setImageBitmap(link.bitmap)
 
             binding.imageView.setOnClickListener {
-                onLinkClickedListener?.onLinkClicked(link)
+                onDetailClickedListener?.onDetailClicked(link)
             }
             binding.linkTextView.setOnClickListener {
-                onLinkClickedListener?.onLinkClicked(link)
+                onDetailClickedListener?.onDetailClicked(link)
             }
             binding.titleTextView.setOnClickListener {
-                onLinkClickedListener?.onLinkClicked(link)
+                onDetailClickedListener?.onDetailClicked(link)
             }
             binding.editButton.setOnClickListener {
-                onDetailClickedListener?.onDetailClicked(link)
+                onLinkClickedListener?.onLinkClicked(link)
             }
         }
     }

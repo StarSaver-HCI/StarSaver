@@ -8,4 +8,36 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray_cc">#cccccc</color>
+
+    <!-- 배경색-->
+    <color name="bg_screen1">#07E940</color>
+    <color name="bg_screen2">#FFAD03</color>
+    <color name="bg_screen3">#FF3385</color>
+    <color name="bg_screen4">#25C8E4</color>
+
+    <!-- 선택되지 않은 점(선택 되지 않은 페이지 점) -->
+    <color name="dot_dark_screen1">#D9D9D9</color>
+    <color name="dot_dark_screen2">#D9D9D9</color>
+    <color name="dot_dark_screen3">#D9D9D9</color>
+    <color name="dot_dark_screen4">#D9D9D9</color>
+
+    <!-- 선택된 점(해당 페이지 일 때) -->
+    <color name="dot_light_screen1">#27597F</color>
+    <color name="dot_light_screen2">#27597F</color>
+    <color name="dot_light_screen3">#27597F</color>
+    <color name="dot_light_screen4">#27597F</color>
+
+    <array name="array_dot_active">
+        <item>@color/dot_light_screen1</item>
+        <item>@color/dot_light_screen2</item>
+        <item>@color/dot_light_screen3</item>
+        <item>@color/dot_light_screen4</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/dot_dark_screen1</item>
+        <item>@color/dot_dark_screen2</item>
+        <item>@color/dot_dark_screen3</item>
+        <item>@color/dot_dark_screen4</item>
+    </array>
 </resources>

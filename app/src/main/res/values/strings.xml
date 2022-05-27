@@ -35,4 +35,6 @@
     <string name="cancelString">cancel</string>
     <string name="saveString">save</string>
     <string name="dialog_notification">백업하기와 데이터\n불러오기는 이메일\n연동시에만 가능합니다</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

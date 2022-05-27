@@ -4,6 +4,8 @@ import android.R
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -11,6 +13,7 @@ import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.View
 import android.view.Window
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -108,6 +111,8 @@ class AddLinkActivity : AppCompatActivity() {
         var addLinkDialog = Dialog(this)
         var dialogView = DialogAddLinkBinding.inflate(layoutInflater).root
         addLinkDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        addLinkDialog.window!!.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        addLinkDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         addLinkDialog.setContentView(dialogView)
         addLinkDialog.show()
     }
@@ -139,7 +144,7 @@ class AddLinkActivity : AppCompatActivity() {
             }
             //추가 후 팝업의 시간을 벌기 위해서 핸들러 사용
             val handler = Handler()
-            handler.postDelayed(Runnable { addBitmap(bm) }, 1000)
+            handler.postDelayed(Runnable { addBitmap(bm) }, 1500)
         }
         binding.cancelButton.setOnClickListener {
             finish()

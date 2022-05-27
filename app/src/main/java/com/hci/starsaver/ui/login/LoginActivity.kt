@@ -58,7 +58,7 @@ class LoginActivity:AppCompatActivity() {
         binding.loginGuestButton.setOnClickListener { auth.signInAnonymously()
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val intent = Intent(this, LoadingActivity::class.java)
+                    val intent = Intent(this, TutorialActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY )
                     startActivity(intent)
                     handleSuccessLogin()
@@ -105,7 +105,7 @@ class LoginActivity:AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val intent = Intent(this, LoadingActivity::class.java)
+                    val intent = Intent(this, TutorialActivity::class.java)
                     startActivity(intent)
                     handleSuccessLogin()
                 } else {
