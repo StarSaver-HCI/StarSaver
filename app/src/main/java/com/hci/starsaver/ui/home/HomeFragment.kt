@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.hci.starsaver.R
 import com.hci.starsaver.data.bookMark.BookMark
 import com.hci.starsaver.databinding.DalogRemoveBinding
+import com.hci.starsaver.databinding.DialogRemoveBookmarkBinding
 import com.hci.starsaver.databinding.FragmentHomeBinding
 import com.hci.starsaver.ui.addfolder.AddFolderActivity
 import com.hci.starsaver.ui.addlink.AddLinkActivity
@@ -305,21 +306,46 @@ class HomeFragment : Fragment() {
 
     // 삭제 다이얼로그
     private fun showDialog() {
-        var addLinkDialog = Dialog(requireContext())
-        var dialogView = DalogRemoveBinding.inflate(layoutInflater)
-        dialogView.cancelButton.setOnClickListener {
-            addLinkDialog.dismiss()
+        var removeDialog = Dialog(requireContext())
+        var dialogView = DialogRemoveBookmarkBinding.inflate(layoutInflater)
+
+
+        removeDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        removeDialog.setContentView(dialogView.root)
+        removeDialog.window!!.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        removeDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialogView.cancelTextView.setOnClickListener {
+            removeDialog.cancel()
         }
-        dialogView.removeButton.setOnClickListener {
+
+        dialogView.removeTextView.setOnClickListener {
             viewModel.deleteBookMark(viewModel.currentBookMark.value!!)
             viewModel.popFolder()
             reloadList()
-            addLinkDialog.dismiss()
+            removeDialog.dismiss()
         }
-        addLinkDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        addLinkDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        addLinkDialog.setContentView(dialogView.root)
-        addLinkDialog.show()
+
+        removeDialog.window?.setGravity(Gravity.BOTTOM)
+        removeDialog.show()
+
+
+
+//        var addLinkDialog = Dialog(requireContext())
+//        var dialogView = DalogRemoveBinding.inflate(layoutInflater)
+//        dialogView.cancelButton.setOnClickListener {
+//            addLinkDialog.dismiss()
+//        }
+//        dialogView.removeButton.setOnClickListener {
+//            viewModel.deleteBookMark(viewModel.currentBookMark.value!!)
+//            viewModel.popFolder()
+//            reloadList()
+//            addLinkDialog.dismiss()
+//        }
+//        addLinkDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        addLinkDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        addLinkDialog.setContentView(dialogView.root)
+//        addLinkDialog.show()
     }
 
     // 외부로 공유하기
