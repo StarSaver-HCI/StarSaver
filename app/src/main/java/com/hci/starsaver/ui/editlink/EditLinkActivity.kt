@@ -30,8 +30,8 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
     private lateinit var binding: ActivityEditLinkBinding
     private lateinit var viewModel: HomeViewModel
     private lateinit var bm: BookMark
-    private var currentId = 0L
-    private var selectedParentId =0L
+    private lateinit var adapter: ArrayAdapter<String>
+    private var selectedParentId = 0L
     private var isRemoved = false
     private var isEditing = false
 
@@ -64,7 +64,7 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
     }
 
     private fun initBeforeEdit() {
-        isEditing= false
+        isEditing = false
         binding.apply {
             topBarTextView.visibility = View.INVISIBLE
             shareOrRemoveButton.visibility = View.VISIBLE
@@ -80,36 +80,25 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
             descriptionEditText.onFocusChangeListener = focus
             descriptionEditText.addTextChangedListener(watcher)
             starSwitch.setOnCheckedChangeListener { _, _ -> initEdit() }
+            initSpinner()
         }
     }
 
     private fun initSpinner() {
-        viewModel.readAllData.observe(this){
+        viewModel.readAllData.observe(this) {
             val idList = ArrayDeque<Long>()
             val spinList = ArrayDeque<String>()
-            var b:BookMark? = null
-            it.forEach { bm->
-                if(bm.isLink==0) {
-                    if(bm.id == currentId) {
-                        b = bm
-                    }else{
-                        idList.addLast(bm.id!!)
-                        spinList.addLast(bm.title)
-                    }
+            it.forEach { bookmark ->
+                if (bookmark.isLink == 0) {
+                    idList.addLast(bookmark.id!!)
+                    spinList.addLast(bookmark.title)
                 }
             }
-            if(b!=null){
-                idList.addFirst(b!!.id!!)
-                spinList.addFirst(b!!.title)
-            }else{
-                idList.addFirst(0)
-                spinList.addFirst("home")
-            }
-
-
-            val adapter = ArrayAdapter(this,
+            adapter = ArrayAdapter(
+                this,
                 android.R.layout.simple_spinner_dropdown_item,
-                ArrayList<String>(spinList))
+                ArrayList<String>(spinList)
+            )
             binding.spinner.adapter = adapter
 
             binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -121,18 +110,20 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
                 ) {
                     selectedParentId = idList[position]
                 }
+
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+            binding.spinner.setSelection(idList.indexOf(bm.parentId))
         }
     }
 
     private fun initEdit() {
-        isEditing=true
+        isEditing = true
         binding.apply {
             topBarTextView.visibility = View.VISIBLE
             shareOrRemoveButton.visibility = View.INVISIBLE
-            cancelButton.visibility=View.VISIBLE
-            saveButton.visibility=View.VISIBLE
+            cancelButton.visibility = View.VISIBLE
+            saveButton.visibility = View.VISIBLE
             cancelButton.setOnClickListener {
                 bm = intent.getSerializableExtra("BookMark") as BookMark
                 binding.titleTextView.setText(bm.title)
@@ -141,7 +132,6 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
                 binding.starSwitch.isChecked = bm.isStar
                 currentFocus?.clearFocus()
                 initBeforeEdit()
-
             }
             saveButton.setOnClickListener {
                 currentFocus?.clearFocus()
@@ -168,17 +158,19 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
                 }
             if (url != null) {
                 link.bitmap = ImageDownloadManager.getImage(url!!)
-            }else{
-                link.bitmap = BitmapFactory.decodeResource(resources, com.hci.starsaver.R.drawable.icon)
+            } else {
+                link.bitmap =
+                    BitmapFactory.decodeResource(resources, com.hci.starsaver.R.drawable.icon)
             }
             viewModel.addBookMark(link)
         }
     }
 
     private fun getEditedBookMark(): BookMark {
+        bm.parentId = selectedParentId
         return BookMark(
             bm.id,
-            bm.parentId,
+            selectedParentId,
             binding.titleTextView.text.toString(),
             binding.descriptionEditText.text.toString(),
             1,
@@ -220,7 +212,10 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
 
         removeDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         removeDialog.setContentView(dialogView.root)
-        removeDialog.window!!.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        removeDialog.window!!.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        );
         removeDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         dialogView.cancelTextView.setOnClickListener {
@@ -235,8 +230,6 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
 
         removeDialog.window?.setGravity(Gravity.BOTTOM)
         removeDialog.show()
-
-
 
 
 //        val dialogBuilder = AlertDialog.Builder(this)
@@ -257,20 +250,20 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
 //        alert.show()
     }
 
-    private val watcher = object :TextWatcher{
+    private val watcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
         override fun afterTextChanged(s: Editable?) {
-            if(isEditing.not()){
+            if (isEditing.not()) {
                 initEdit()
             }
         }
     }
 
     private val focus = View.OnFocusChangeListener { v, hasFocus ->
-        if(currentFocus == v && isEditing.not()){
+        if (currentFocus == v && isEditing.not()) {
             initEdit()
         }
     }
