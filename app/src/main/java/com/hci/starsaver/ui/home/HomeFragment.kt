@@ -15,15 +15,14 @@ import android.webkit.URLUtil
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hci.starsaver.R
 import com.hci.starsaver.data.bookMark.BookMark
-import com.hci.starsaver.databinding.DalogRemoveBinding
 import com.hci.starsaver.databinding.DialogRemoveBookmarkBinding
 import com.hci.starsaver.databinding.FragmentHomeBinding
 import com.hci.starsaver.ui.addfolder.AddFolderActivity
@@ -33,6 +32,7 @@ import com.hci.starsaver.ui.editlink.EditLinkActivity
 import com.hci.starsaver.util.FolderAdapter
 import com.hci.starsaver.util.LinkAdapter
 import com.hci.starsaver.util.PathAdapter
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
         lateinit var viewModel: HomeViewModel
     }
 
-    private lateinit var list:MutableList<BookMark>
+    private lateinit var list: MutableList<BookMark>
     private lateinit var callback: OnBackPressedCallback
     private val folderAdapter = FolderAdapter()
     private val linkAdapter = LinkAdapter()
@@ -265,14 +265,15 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun initPathLayout(){
+    private fun initPathLayout() {
         pathAdapter.setOnClickedListener {
-            for(i in 0 until it) {
+            for (i in 0 until it) {
                 viewModel.popFolder()
                 reloadList()
             }
         }
-        binding.pathRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
+        binding.pathRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.pathRecyclerView.adapter = pathAdapter
 
         popUpObject = PopupMenu.OnMenuItemClickListener { item ->
@@ -312,7 +313,10 @@ class HomeFragment : Fragment() {
 
         removeDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         removeDialog.setContentView(dialogView.root)
-        removeDialog.window!!.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        removeDialog.window!!.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        );
         removeDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         dialogView.cancelTextView.setOnClickListener {
@@ -320,15 +324,23 @@ class HomeFragment : Fragment() {
         }
 
         dialogView.removeTextView.setOnClickListener {
-            viewModel.deleteBookMark(viewModel.currentBookMark.value!!)
-            viewModel.popFolder()
-            reloadList()
-            removeDialog.dismiss()
+            lifecycleScope.launch {
+                val idList = mutableListOf(viewModel.currentBookMark.value!!.id)
+                viewModel.readAllData.value!!.forEach {
+                    if (idList.contains(it.parentId)) {
+                        viewModel.deleteBookMark(it)
+                        idList.add(it.id)
+                    }
+                }
+                viewModel.deleteBookMark(viewModel.currentBookMark.value!!)
+                viewModel.popFolder()
+                reloadList()
+                removeDialog.dismiss()
+            }
         }
 
         removeDialog.window?.setGravity(Gravity.BOTTOM)
         removeDialog.show()
-
 
 
 //        var addLinkDialog = Dialog(requireContext())
@@ -349,7 +361,7 @@ class HomeFragment : Fragment() {
     }
 
     // 외부로 공유하기
-    private fun sendToExternal(bm:BookMark) {
+    private fun sendToExternal(bm: BookMark) {
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             val text = makeTree("Shared by StarSaver\n\n" + bm.title + "[folder]", bm.id!!, 0)
