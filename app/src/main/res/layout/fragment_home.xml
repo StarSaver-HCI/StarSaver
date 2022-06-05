@@ -116,8 +116,8 @@
 
         <ImageView
             android:id="@+id/optionImageView"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/ripple_unbounded"
             android:clickable="true"
