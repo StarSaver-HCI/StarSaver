@@ -13,6 +13,7 @@ import android.view.Window
 import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.hci.starsaver.R
 import com.hci.starsaver.config.BookMarkApplication
@@ -43,13 +44,34 @@ class EditFolderActivity : AppCompatActivity(){
 
         initLayout()
         initBeforeEdit()
+        editListener()
+    }
+
+    private fun editListener(){
+        binding.titleTextView.addTextChangedListener {changeButton()}
+        binding.descriptionEditText.addTextChangedListener {changeButton()}
+        binding.reminderSwitch.setOnClickListener {changeButton()}
+    }
+
+    private fun changeButton() {
+        if (isEditing){
+            if(binding.titleTextView.getText().toString() == bm.title &&
+                binding.descriptionEditText.getText().toString() ==  bm.description &&
+                ((bm.id != 0L && binding.reminderSwitch.isChecked == bm.isRemind) || (bm.id == 0L && binding.reminderSwitch.isChecked == BookMarkApplication.prefs.homeIsRemind))){
+                binding.saveButton.setTextColor(Color.parseColor("#999999"))
+                binding.saveButton.isClickable = false
+            }
+            else{
+                binding.saveButton.setTextColor(Color.parseColor("#3162AC"))
+                binding.saveButton.isClickable = true
+            }
+        }
     }
 
     private fun initBeforeEdit() {
         isEditing = false
         binding.apply {
             topBarTextView.visibility = View.INVISIBLE
-            cancelButton.visibility = View.INVISIBLE
             saveButton.visibility = View.INVISIBLE
             titleTextView.setOnClickListener { initEdit() }
             titleTextView.onFocusChangeListener = focus
@@ -65,12 +87,7 @@ class EditFolderActivity : AppCompatActivity(){
         isEditing = true
         binding.apply {
             topBarTextView.visibility = View.VISIBLE
-            cancelButton.visibility = View.VISIBLE
             saveButton.visibility = View.VISIBLE
-            cancelButton.setOnClickListener {
-                currentFocus?.clearFocus()
-                initBeforeEdit()
-            }
             saveButton.setOnClickListener {
                 currentFocus?.clearFocus()
 
@@ -107,7 +124,11 @@ class EditFolderActivity : AppCompatActivity(){
             if (bm.id != 0L) bm.isRemind else BookMarkApplication.prefs.homeIsRemind
 
         binding.backButton.setOnClickListener {
-            finish()
+            if(isEditing){
+                currentFocus?.clearFocus()
+                initBeforeEdit()
+            }
+            else {finish()}
         }
     }
 

@@ -33,13 +33,19 @@
             android:visibility="invisible"
             tools:visibility="visible" />
 
-        <ImageButton
+        <TextView
+            android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:backgroundTint="#00000000"
-            android:src="@drawable/ic_baseline_more_vert_24"
-            android:visibility="invisible" />
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:text="완료"
+            android:textColor="#999999"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -148,24 +154,4 @@
         android:layout_height="0dp"
         android:layout_weight="@integer/material_motion_duration_long_1" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:orientation="horizontal"
-        android:padding="24dp">
-
-        <android.widget.Button
-            android:id="@+id/cancel_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ripple_drawable_cancel" />
-
-        <android.widget.Button
-            android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:background="@drawable/ripple_drawable_save" />
-    </LinearLayout>
 </LinearLayout>

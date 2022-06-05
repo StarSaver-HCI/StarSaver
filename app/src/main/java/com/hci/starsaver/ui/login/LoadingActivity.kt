@@ -21,6 +21,8 @@ class LoadingActivity : AppCompatActivity() {
 
     private fun startLoading() {
         val handler = Handler()
-        handler.postDelayed(Runnable { startActivity(Intent(this@LoadingActivity,MainActivity::class.java)) }, 2000)
+        handler.postDelayed(Runnable {
+            startActivity(Intent(this@LoadingActivity,MainActivity::class.java))
+                                     finish()}, 2000)
     }
 }

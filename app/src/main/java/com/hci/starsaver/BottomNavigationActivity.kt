@@ -1,6 +1,7 @@
 package com.hci.starsaver
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -27,5 +28,15 @@ class BottomNavigationActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
         navController = findNavController(R.id.nav_host_fragment_activity_bottom_navigation)
         navView.setupWithNavController(navController)
+    }
+
+    fun showTabLayout() {
+        val navView: BottomNavigationView = binding.navView
+        navView.visibility = View.VISIBLE
+    }
+
+    fun hideTabLayout() {
+        val navView: BottomNavigationView = binding.navView
+        navView.visibility = View.GONE
     }
 }

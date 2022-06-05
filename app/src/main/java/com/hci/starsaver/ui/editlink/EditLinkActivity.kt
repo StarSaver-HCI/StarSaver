@@ -13,6 +13,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.hci.starsaver.R
 import com.hci.starsaver.data.bookMark.BookMark
@@ -45,6 +46,30 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
         initSpinner()
         initLayout()
         initBeforeEdit()
+        editListener()
+    }
+
+    private fun editListener(){
+        binding.titleTextView.addTextChangedListener {changeButton()}
+        binding.linkTextView.addTextChangedListener {changeButton()}
+        binding.descriptionEditText.addTextChangedListener {changeButton()}
+        binding.starSwitch.setOnClickListener {changeButton()}
+    }
+
+    private fun changeButton() {
+        if (isEditing){
+            if(binding.titleTextView.getText().toString() == bm.title &&
+                binding.linkTextView.getText().toString() == bm.link &&
+                binding.descriptionEditText.getText().toString() ==  bm.description &&
+                binding.starSwitch.isChecked == bm.isStar){
+                binding.saveButton.setTextColor(Color.parseColor("#999999"))
+                binding.saveButton.isClickable = false
+            }
+            else{
+                binding.saveButton.setTextColor(Color.parseColor("#3162AC"))
+                binding.saveButton.isClickable = true
+            }
+        }
     }
 
     private fun initLayout() {
@@ -56,7 +81,16 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
 
 
         binding.backButton.setOnClickListener {
-            finish()
+            if(isEditing){
+                bm = intent.getSerializableExtra("BookMark") as BookMark
+                binding.titleTextView.setText(bm.title)
+                binding.linkTextView.setText(bm.link)
+                binding.descriptionEditText.setText(bm.description)
+                binding.starSwitch.isChecked = bm.isStar
+                currentFocus?.clearFocus()
+                initBeforeEdit()
+            }
+            else{finish()}
         }
         binding.shareOrRemoveButton.setOnClickListener {
             showPopup(it)
@@ -68,7 +102,6 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
         binding.apply {
             topBarTextView.visibility = View.INVISIBLE
             shareOrRemoveButton.visibility = View.VISIBLE
-            cancelButton.visibility = View.INVISIBLE
             saveButton.visibility = View.INVISIBLE
             titleTextView.setOnClickListener { initEdit() }
             titleTextView.onFocusChangeListener = focus
@@ -122,17 +155,7 @@ class EditLinkActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener 
         binding.apply {
             topBarTextView.visibility = View.VISIBLE
             shareOrRemoveButton.visibility = View.INVISIBLE
-            cancelButton.visibility = View.VISIBLE
             saveButton.visibility = View.VISIBLE
-            cancelButton.setOnClickListener {
-                bm = intent.getSerializableExtra("BookMark") as BookMark
-                binding.titleTextView.setText(bm.title)
-                binding.linkTextView.setText(bm.link)
-                binding.descriptionEditText.setText(bm.description)
-                binding.starSwitch.isChecked = bm.isStar
-                currentFocus?.clearFocus()
-                initBeforeEdit()
-            }
             saveButton.setOnClickListener {
                 currentFocus?.clearFocus()
                 addBitmap(getEditedBookMark())
