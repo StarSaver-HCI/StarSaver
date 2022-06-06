@@ -22,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
         android:text="잊고 있던 소중한 정보를"
         android:paddingHorizontal="83dp"
