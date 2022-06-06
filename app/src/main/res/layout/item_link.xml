@@ -31,13 +31,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <TextView
-            android:layout_gravity="left"
-            android:id="@+id/linkTextView"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:ellipsize="end"/>
+<!--        <TextView-->
+<!--            android:layout_gravity="left"-->
+<!--            android:id="@+id/linkTextView"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:maxLines="1"-->
+<!--            android:ellipsize="end"/>-->
     </LinearLayout>
 
     <ImageView
