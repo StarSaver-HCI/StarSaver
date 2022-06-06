@@ -22,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
         android:text="다른 앱에서 손쉽게 링크를"
         android:textColor="#242424"

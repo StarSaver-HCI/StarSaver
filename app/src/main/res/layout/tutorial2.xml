@@ -22,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
         android:text="효율적으로 정리할 수 있어요"
         android:paddingHorizontal="83dp"
@@ -31,6 +32,10 @@
         android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="경로명을 터치하면 해당 폴더로 이동!"
+        android:paddingHorizontal="73dp"
+        android:textColor="#242424"
+        android:gravity="center"
         android:layout_marginBottom="100dp"
         android:textSize="16sp" />
 

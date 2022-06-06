@@ -29,7 +29,7 @@ class LinkAdapter : ListAdapter<BookMark, LinkAdapter.ViewHolder>(diffUtil) {
         RecyclerView.ViewHolder(binding.root) {
         fun bind(link: BookMark) {
             binding.titleTextView.text = link.title
-            binding.linkTextView.text = link.link
+//            binding.linkTextView.text = link.link
             binding.starImageView.visibility = if (link.isStar) View.VISIBLE else View.GONE
 
             // 비트맵 캐싱, 링크 아이콘 띄우기
@@ -38,9 +38,9 @@ class LinkAdapter : ListAdapter<BookMark, LinkAdapter.ViewHolder>(diffUtil) {
             binding.imageView.setOnClickListener {
                 onDetailClickedListener?.onDetailClicked(link)
             }
-            binding.linkTextView.setOnClickListener {
-                onDetailClickedListener?.onDetailClicked(link)
-            }
+//            binding.linkTextView.setOnClickListener {
+//                onDetailClickedListener?.onDetailClicked(link)
+//            }
             binding.titleTextView.setOnClickListener {
                 onDetailClickedListener?.onDetailClicked(link)
             }
