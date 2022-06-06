@@ -111,6 +111,7 @@
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/ic_notifications.xml" value="0.3135" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.3135" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/ic_settings.xml" value="0.1685" />
+        <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/link_background.xml" value="0.33" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/link_item_shape.xml" value="0.3135" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/modal_background.xml" value="0.367" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/drawable/navigation_bar.xml" value="0.3135" />
@@ -144,7 +145,7 @@
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/fragment_tutorial3.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/fragment_tutorial4.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/item_folder.xml" value="0.327445652173913" />
-        <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/item_link.xml" value="0.327445652173913" />
+        <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/item_link.xml" value="0.33" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/item_remind_folder.xml" value="0.327445652173913" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/item_spinner.xml" value="0.327445652173913" />
         <entry key="..\:/Users/inkyo/Desktop/HCI2022_starsaver/app/src/main/res/layout/temp.xml" value="0.25" />
