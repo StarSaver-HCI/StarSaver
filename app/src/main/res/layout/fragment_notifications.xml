@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="horizontal">
 
 
@@ -16,51 +16,75 @@
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
             android:backgroundTint="#00000000"
-            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
-            tools:ignore="SpeakableTextPresentCheck" />
+            android:visibility="invisible"
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/topBarTextView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_centerInParent="true"
             android:gravity="center"
             android:text="리마인더"
-            android:textColor="#242424"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <ImageButton
+            android:id="@+id/editButton"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#00000000"
+            android:src="@drawable/ic_edit_pencil" />
+
+        <TextView
+            android:id="@+id/saveText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:clickable="false"
-            android:src="@drawable/ic_baseline_more_vert_24"
-            android:visibility="invisible" />
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:text="완료"
+            android:visibility="gone"
+            android:textColor="#3162AC"
+            android:textSize="16sp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#E5E5E5" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/reminderLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="12dp"
-        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text = "리마인더 설정"
+            android:layout_alignParentLeft="true"
             android:textColor="#505050"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -69,10 +93,22 @@
             android:id="@+id/reminderSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:thumbTint="#FFFFFF"
             android:track="@drawable/switch_track_selector"
+            android:visibility="gone"
             tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/textRemind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="활성화"
+            android:textColor="#3162AC"
+            android:textSize="16sp" />
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
@@ -131,6 +167,7 @@
                         android:textColor="#505050"
                         android:padding="6dp"
                         android:textSize="16sp"
+                        android:clickable="false"
                         tools:text="4주     2번     1회" />
 
                     <TextView
@@ -142,6 +179,7 @@
                         android:textColor="#505050"
                         android:padding="6dp"
                         android:textSize="16sp"
+                        android:clickable="false"
                         tools:text="오전    12시    00분" />
 
                 </LinearLayout>
@@ -306,11 +344,7 @@
                     android:textColor="#505050"
                     android:textSize="16sp" />
 
-                <android.widget.Button
-                    android:id="@+id/isAllFolderSwitchButton"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:background="@drawable/ic_edit_pencil" />
+
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -338,33 +372,6 @@
             android:layout_margin="10dp"
             android:background="@drawable/ic_button_test" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/buttonLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <android.widget.Button
-            android:id="@+id/cancel_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="28dp"
-
-            android:background="@drawable/ripple_drawable_cancel" />
-
-
-        <android.widget.Button
-            android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="28dp"
-            android:background="@drawable/ripple_drawable_save" />
     </LinearLayout>
 
 </LinearLayout>

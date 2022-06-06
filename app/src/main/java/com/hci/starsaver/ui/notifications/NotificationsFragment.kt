@@ -16,11 +16,11 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.hci.starsaver.BottomNavigationActivity
+import com.hci.starsaver.MainActivity
 import com.hci.starsaver.R
 import com.hci.starsaver.config.BookMarkApplication
 import com.hci.starsaver.data.bookMark.BookMark
@@ -33,6 +33,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 
+
 class NotificationsFragment : Fragment() {
     private lateinit var binding: FragmentNotificationsBinding
     private lateinit var viewModel: HomeViewModel
@@ -40,6 +41,7 @@ class NotificationsFragment : Fragment() {
     private var expanded = false
     private var timePicking = false
     private var numberPicking = false
+    private var isEdit = false
     private var week = 0
     private var bun = 0
     private var gae = 0
@@ -51,6 +53,12 @@ class NotificationsFragment : Fragment() {
     private lateinit var notificationSet:MutableSet<BookMark>
     private val channelID = "testChannel"
     private var notificationManager: NotificationManager? = null
+
+    lateinit var bottomNavigationActivity : BottomNavigationActivity
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        bottomNavigationActivity = context as BottomNavigationActivity
+    }
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
@@ -72,24 +80,22 @@ class NotificationsFragment : Fragment() {
 
     private fun backButton() {
         binding.backButton.setOnClickListener {
-            findNavController().popBackStack()
-        }
-    }
+            if (isEdit){
+                showNavi()
+                isEdit = false
+                binding.reminderSwitch.visibility = View.GONE
+                binding.textRemind.visibility = View.VISIBLE
+                binding.saveText.visibility = View.GONE
+                binding.editButton.visibility = View.VISIBLE
+                binding.backButton.visibility = View.INVISIBLE
+                binding.topBarTextView.setText("리마인더")
 
-    @SuppressLint("SetTextI18n")
-    private fun initButtons() {
-        binding.isAllFolderSwitchButton.setOnClickListener {
-            expanded = true
-            binding.isAllFolderSwitchButton.visibility = View.GONE
-            binding.buttonLayout.visibility = View.VISIBLE
-            binding.saveButton.isClickable = true
-            binding.cancelButton.isClickable = true
-            binding.testButtonLayout.visibility = View.GONE
-            showList()
-        }
+                binding.countTextView.isClickable = false
+                binding.timeTextView.isClickable = false
 
-        binding.cancelButton.setOnClickListener {
-            if (numberPicking) {
+
+
+
                 binding.countTextView.text = "${BookMarkApplication.prefs.week}주     " +
                         "${BookMarkApplication.prefs.notificationBun}번     " +
                         "${BookMarkApplication.prefs.notificationGae}개"
@@ -99,13 +105,8 @@ class NotificationsFragment : Fragment() {
                 numberPicking = false
                 binding.countTextView.background = null
                 binding.numberPickerLayout.visibility = View.GONE
-                binding.buttonLayout.visibility = View.GONE
-                binding.saveButton.isClickable = false
-                binding.cancelButton.isClickable = false
-                binding.isAllFolderSwitchButton.visibility = View.VISIBLE
-                binding.testButtonLayout.visibility = View.VISIBLE
-            }
-            if (timePicking) {
+
+
                 binding.timeTextView.text = "${BookMarkApplication.prefs.amOrPm}    " +
                         "${String.format("%02d", BookMarkApplication.prefs.hour!!)}시    " +
                         "${String.format("%02d", BookMarkApplication.prefs.minute!!)}분"
@@ -119,78 +120,121 @@ class NotificationsFragment : Fragment() {
                 timePicking = false
                 binding.timeTextView.background = null
                 binding.timePickerLayout.visibility = View.GONE
-                binding.buttonLayout.visibility = View.GONE
-                binding.saveButton.isClickable = false
-                binding.cancelButton.isClickable = false
-                binding.isAllFolderSwitchButton.visibility = View.VISIBLE
                 binding.testButtonLayout.visibility = View.VISIBLE
-            }
-            if (expanded) {
+
+                if(BookMarkApplication.prefs.remindAvailable){
+                    binding.textRemind.setText("활성화")
+                    binding.textRemind.setTextColor(Color.parseColor("#3162AC") )
+                }
+                else{
+                    binding.textRemind.setText("비활성화")
+                    binding.textRemind.setTextColor(Color.parseColor("#999999") )
+                }
+
+
+
                 expanded = false
-                binding.isAllFolderSwitchButton.visibility = View.VISIBLE
-                binding.buttonLayout.visibility = View.GONE
-                binding.saveButton.isClickable = false
-                binding.cancelButton.isClickable = false
-                binding.testButtonLayout.visibility = View.VISIBLE
                 showList()
+
+
             }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun initButtons() {
+        binding.editButton.setOnClickListener{
+            hideNavi()
+            isEdit = true
+            binding.editButton.visibility = View.GONE
+            binding.reminderSwitch.visibility = View.VISIBLE
+            binding.textRemind.visibility = View.GONE
+            binding.saveText.visibility = View.VISIBLE
+            binding.backButton.visibility = View.VISIBLE
+            binding.topBarTextView.setText("리마인더 편집")
+
+            expanded = true
+            binding.testButtonLayout.visibility = View.GONE
+            showList()
+
+            binding.countTextView.isClickable = true
+            binding.timeTextView.isClickable = true
+
+
         }
 
-        binding.saveButton.setOnClickListener {
-            if (numberPicking) {
-                BookMarkApplication.prefs.week = week
-                BookMarkApplication.prefs.notificationBun = bun
-                BookMarkApplication.prefs.notificationGae = gae
-                numberPicking = false
-                binding.countTextView.background = null
-                binding.numberPickerLayout.visibility = View.GONE
-                binding.buttonLayout.visibility = View.GONE
-                binding.saveButton.isClickable = false
-                binding.cancelButton.isClickable = false
-                binding.isAllFolderSwitchButton.visibility = View.VISIBLE
-                binding.testButtonLayout.visibility = View.VISIBLE
+        binding.saveText.setOnClickListener{
+            showNavi()
+            isEdit = false
+            binding.reminderSwitch.visibility = View.GONE
+            binding.textRemind.visibility = View.VISIBLE
+            binding.saveText.visibility = View.GONE
+            binding.editButton.visibility = View.VISIBLE
+            binding.backButton.visibility = View.INVISIBLE
+            binding.topBarTextView.setText("리마인더")
+
+            binding.countTextView.isClickable = false
+            binding.timeTextView.isClickable = false
+
+
+            timePicking = false
+            numberPicking = false
+
+
+            BookMarkApplication.prefs.week = week
+            BookMarkApplication.prefs.notificationBun = bun
+            BookMarkApplication.prefs.notificationGae = gae
+            binding.countTextView.background = null
+            binding.numberPickerLayout.visibility = View.GONE
+            binding.testButtonLayout.visibility = View.VISIBLE
+
+
+
+
+            BookMarkApplication.prefs.hour = hour
+            BookMarkApplication.prefs.minute = minute
+            if (amOrPm == 0) {
+                BookMarkApplication.prefs.amOrPm = "오전"
+            } else {
+                BookMarkApplication.prefs.amOrPm = "오후"
             }
-            if (timePicking) {
-                BookMarkApplication.prefs.hour = hour
-                BookMarkApplication.prefs.minute = minute
-                if (amOrPm == 0) {
-                    BookMarkApplication.prefs.amOrPm = "오전"
-                } else {
-                    BookMarkApplication.prefs.amOrPm = "오후"
+            binding.timeTextView.background = null
+            binding.timePickerLayout.visibility = View.GONE
+
+
+
+
+            var map = HashMap<Long?,Boolean>()
+            for (folder in tempSet) {
+                map[folder.id] = folder.isRemind
+                viewModel.addBookMark(folder)
+                if (folder.id == 0L) {
+                    BookMarkApplication.prefs.homeIsRemind = folder.isRemind
                 }
-                timePicking = false
-                binding.timeTextView.background = null
-                binding.timePickerLayout.visibility = View.GONE
-                binding.buttonLayout.visibility = View.GONE
-                binding.saveButton.isClickable = false
-                binding.cancelButton.isClickable = false
-                binding.isAllFolderSwitchButton.visibility = View.VISIBLE
-                binding.testButtonLayout.visibility = View.VISIBLE
             }
-            if (expanded) {
-                var map = HashMap<Long?,Boolean>()
-                for (folder in tempSet) {
-                    map[folder.id] = folder.isRemind
-                    viewModel.addBookMark(folder)
-                    if (folder.id == 0L) {
-                        BookMarkApplication.prefs.homeIsRemind = folder.isRemind
-                    }
+            GlobalScope.launch {
+                viewModel.readAllData.value!!.forEach {
+                    if(map[it.parentId]!= null) it.isRemind = map[it.parentId]!!
+                    viewModel.addBookMark(it)
                 }
-                GlobalScope.launch {
-                    viewModel.readAllData.value!!.forEach {
-                        if(map[it.parentId]!= null) it.isRemind = map[it.parentId]!!
-                        viewModel.addBookMark(it)
-                    }
-                }
-                expanded = false
-                binding.isAllFolderSwitchButton.visibility = View.VISIBLE
-                binding.buttonLayout.visibility = View.GONE
-                binding.saveButton.isClickable = false
-                binding.cancelButton.isClickable = false
-                binding.testButtonLayout.visibility = View.VISIBLE
-                showList()
             }
+            expanded = false
+            showList()
+
+
+
+            if(BookMarkApplication.prefs.remindAvailable){
+                binding.textRemind.setText("활성화")
+                binding.textRemind.setTextColor(Color.parseColor("#3162AC") )
+            }
+            else{
+                binding.textRemind.setText("비활성화")
+                binding.textRemind.setTextColor(Color.parseColor("#999999") )
+            }
+
         }
+
+
 
         binding.testButton.setOnClickListener {
             randomSelection()
@@ -220,6 +264,15 @@ class NotificationsFragment : Fragment() {
         binding.remindFolderRecyclerView.layoutManager =
             LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
 
+        if(BookMarkApplication.prefs.remindAvailable){
+            binding.textRemind.setText("활성화")
+            binding.textRemind.setTextColor(Color.parseColor("#3162AC") )
+        }
+        else{
+            binding.textRemind.setText("비활성화")
+            binding.textRemind.setTextColor(Color.parseColor("#999999") )
+        }
+
         showList()
         initTimePicker2()
         initNumberPicker()
@@ -228,17 +281,7 @@ class NotificationsFragment : Fragment() {
             if (numberPicking) {
                 numberPicking = false
                 it.background = null
-                binding.countTextView.text = "${BookMarkApplication.prefs.week}주     " +
-                        "${BookMarkApplication.prefs.notificationBun}번     " +
-                        "${BookMarkApplication.prefs.notificationGae}개"
-                week = BookMarkApplication.prefs.week!!
-                bun = BookMarkApplication.prefs.notificationBun!!
-                gae = BookMarkApplication.prefs.notificationGae!!
                 binding.numberPickerLayout.visibility = View.GONE
-                binding.buttonLayout.visibility = View.GONE
-                binding.saveButton.isClickable = false
-                binding.cancelButton.isClickable = false
-                binding.testButtonLayout.visibility = View.VISIBLE
             } else {
                 numberPicking = true
                 timePicking = false
@@ -246,13 +289,9 @@ class NotificationsFragment : Fragment() {
                 binding.timeTextView.background = null
                 binding.numberPickerLayout.visibility = View.VISIBLE
                 binding.timePickerLayout.visibility = View.GONE
-                binding.buttonLayout.visibility = View.VISIBLE
-                binding.saveButton.isClickable = true
-                binding.cancelButton.isClickable = true
                 binding.weekNumberPicker.value = BookMarkApplication.prefs.week!!
                 binding.bunNumberPicker.value = BookMarkApplication.prefs.notificationBun!!
                 binding.gaeNumberPicker.value = BookMarkApplication.prefs.notificationGae!!
-                binding.testButtonLayout.visibility = View.GONE
             }
         }
 
@@ -260,21 +299,7 @@ class NotificationsFragment : Fragment() {
             if (timePicking) {
                 timePicking = false
                 it.background = null
-                binding.timeTextView.text = "${BookMarkApplication.prefs.amOrPm}    " +
-                        "${String.format("%02d", BookMarkApplication.prefs.hour!!)}시    " +
-                        "${String.format("%02d", BookMarkApplication.prefs.minute!!)}분"
-                hour = BookMarkApplication.prefs.hour!!
-                minute = BookMarkApplication.prefs.minute!!
-                if (BookMarkApplication.prefs.amOrPm == "오전") {
-                    amOrPm = 0
-                } else {
-                    amOrPm = 1
-                }
                 binding.timePickerLayout.visibility = View.GONE
-                binding.buttonLayout.visibility = View.GONE
-                binding.saveButton.isClickable = false
-                binding.cancelButton.isClickable = false
-                binding.testButtonLayout.visibility = View.VISIBLE
             } else {
                 timePicking = true
                 numberPicking = false
@@ -282,12 +307,8 @@ class NotificationsFragment : Fragment() {
                 binding.countTextView.background = null
                 binding.numberPickerLayout.visibility = View.GONE
                 binding.timePickerLayout.visibility = View.VISIBLE
-                binding.buttonLayout.visibility = View.VISIBLE
-                binding.saveButton.isClickable = true
-                binding.cancelButton.isClickable = true
                 binding.hourNumberPicker.value = BookMarkApplication.prefs.hour!!
                 binding.minuteNumberPicker.value = BookMarkApplication.prefs.minute!!
-                binding.testButtonLayout.visibility = View.GONE
                 if (BookMarkApplication.prefs.amOrPm!! == "오전") {
                     binding.amOrPmNumberPicker.value = 0
                 } else {
@@ -475,4 +496,14 @@ class NotificationsFragment : Fragment() {
 
         notificationManager?.notify(id, notification)
     }
+
+
+    private fun hideNavi() {
+        bottomNavigationActivity.hideTabLayout()
+    }
+
+    private fun showNavi() {
+        bottomNavigationActivity.showTabLayout()
+    }
+
 }
